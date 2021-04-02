@@ -1,0 +1,10 @@
+target 'SomeApp' do
+    platform :ios, '13.0'
+    use_frameworks!
+    # These exist only for tests, so they need to be exact
+    pod 'RxSwift', '6.0.0'
+    pod 'RxCocoa', '6.0.0'
+    pod 'NSObject+Rx', '5.2.0'
+    pod 'Auth0', '1.32.0'
+    pod 'Moya', '14.0.0'
+end
