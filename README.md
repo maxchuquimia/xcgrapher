@@ -14,8 +14,13 @@ This produces the following image:
 You could also pass `--apple` to include native frameworks in the graph. See `xcgrapher --help` for more options.
 
 ### Installation
-Clone the project, run `swift build` and find the binary in the created `.build` directory. 
-TODO: add to `homebrew`.
+```sh
+brew tap maxchuquimia/scripts
+brew install xcgrapher
+gem install xcodeproj # If you use Cocoapods you probably don't need to do this
+```
+
+Or, just clone the project, `swift build -c release --disable-sandbox` and find the binary in the `.build/release`  directory. **Note that whilst the project does compile and tests pass in Xcode, it cannot be run directly as some environment variables are missing.** Use `swift build && ./.build/debug/xcgrapher` to run the project when developing features.
 
 ## How it works
 
