@@ -25,10 +25,10 @@ extension ShellTask {
 
         Log(stringRepresentation, dim: true)
 
-        task.waitUntilExit()
-
         let output = stdout.fileHandleForReading.readDataToEndOfFile()
         let errorOutput = stderr.fileHandleForReading.readDataToEndOfFile()
+
+        task.waitUntilExit()
 
         if task.terminationStatus == 0 {
             return String(data: output, encoding: .utf8)!
