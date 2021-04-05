@@ -17,6 +17,7 @@ struct ImportFinder {
             .map {
                 $0
                     .replacingOccurrences(of: "@testable ", with: "")
+                    .replacingOccurrences(of: "@_exported ", with: "")
                     .replacingOccurrences(of: " class ", with: " ")
                     .replacingOccurrences(of: " struct ", with: " ")
                     .replacingOccurrences(of: " enum ", with: " ")

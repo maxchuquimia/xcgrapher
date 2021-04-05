@@ -27,6 +27,8 @@ struct Xcodebuild {
         return try FileManager.default.contentsOfDirectory(atPath: checkoutsDir)
             .map { checkoutsDir.appendingPathComponent($0) }
             .filter { FileManager.default.directoryExists(atPath: $0) }
+            .appending(checkoutsDir) // We also need to check the checkouts directory itself - it seems Realm unpacks itself weirdly and puts it's Package.swift in the checkouts folder :eye_roll:
+            .filter { FileManager.default.fileExists(atPath: $0.appendingPathComponent("Package.swift")) }
     }
 
 }

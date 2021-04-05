@@ -16,4 +16,5 @@ public protocol XCGrapherOptions {
     var spm: Bool { get }
     var pods: Bool { get }
     var force: Bool { get }
+    var plugin: String? { get }
 }

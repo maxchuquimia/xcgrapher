@@ -1,5 +1,6 @@
 
 import Foundation
+import XCGrapherPluginSupport
 
 struct NativeDependencyManager {
 
@@ -22,16 +23,16 @@ struct NativeDependencyManager {
 
 extension NativeDependencyManager: DependencyManager {
 
+    var pluginModuleType: XCGrapherImport.ModuleType {
+        .apple
+    }
+
     func isManaging(module: String) -> Bool {
         allNativeFrameworks.contains(module)
     }
 
     func dependencies(of module: String) -> [String] {
         [] // Obviously we don't know how Apple's frameworks work internally
-    }
-
-    var interfaceTraits: DependencyManagerTraits {
-        .init(edgeColor: "#0071E3") // That classic Apple blue colour
     }
 
 }

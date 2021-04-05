@@ -4,15 +4,23 @@ import XCTest
 @testable import XCGrapherLib
 
 /// `sut` fail to execute `dot`, however we don't care as we are just reading the output text file
-final class XCGrapherMainTests: XCTestCase {
+final class XCGrapherTests: XCTestCase {
 
     private var sut: ((XCGrapherOptions) throws -> Void)!
     private var options: ConcreteGrapherOptions!
     let dotfile = "/tmp/xcgrapher.dot"
 
+    override class func setUp() {
+        super.setUp()
+        let someAppRoot = ConcreteGrapherOptions.someAppRoot
+        if !FileManager.default.directoryExists(atPath: someAppRoot.appendingPathComponent("Pods")) {
+            XCTFail("Run `pod install` in \(someAppRoot) before running these tests.")
+        }
+    }
+
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = XCGrapherMain.run
+        sut = XCGrapher.run
         options = ConcreteGrapherOptions()
 
         try? FileManager.default.removeItem(atPath: dotfile)
@@ -110,7 +118,7 @@ final class XCGrapherMainTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    private static let someAppRoot = URL(fileURLWithPath: #file)
+    static let someAppRoot = URL(fileURLWithPath: #file)
         .deletingLastPathComponent()
         .deletingLastPathComponent()
         .appendingPathComponent("SampleProjects")
@@ -125,7 +133,7 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
     var spm: Bool = false
     var pods: Bool = false
     var force: Bool = false
-
+    var plugin: String? = nil
 }
 
 private enum KnownEdges {
