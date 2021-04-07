@@ -1,7 +1,8 @@
 
 import Foundation
+import XCGrapherPluginSupport
 
-struct Cocoapods {
+struct CocoapodsManager {
 
     /// Contains something like:
     /// ```
@@ -30,7 +31,11 @@ struct Cocoapods {
 
 }
 
-extension Cocoapods: DependencyManager {
+extension CocoapodsManager: DependencyManager {
+
+    var pluginModuleType: XCGrapherImport.ModuleType {
+        .cocoapods
+    }
 
     func isManaging(module: String) -> Bool {
         let podlockEntry = "\n  - ".appending(module).appending(" ")
@@ -50,12 +55,6 @@ extension Cocoapods: DependencyManager {
             .filter { !$0.isEmpty }
             .map { $0.components(separatedBy: " ")[0] }
             .map { $0.replacingOccurrences(of: "\"", with: "") }
-    }
-
-    var interfaceTraits: DependencyManagerTraits {
-        .init(
-            edgeColor: "#380200" // Banner on cocoapods.org
-        )
     }
 
 }

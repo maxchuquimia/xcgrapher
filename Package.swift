@@ -8,10 +8,12 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
-        .executable(name: "xcgrapher", targets: ["xcgrapher"])
+        .executable(name: "xcgrapher", targets: ["xcgrapher"]),
+        .library(name: "XCGrapherModuleImportPlugin", type: .dynamic, targets: ["XCGrapherModuleImportPlugin"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.4.0"))
+        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.4.0")),
+        .package(url: "https://github.com/maxchuquimia/XCGrapherPluginSupport", .upToNextMinor(from: "0.0.5")),
     ],
     targets: [
         .target(
@@ -23,7 +25,15 @@ let package = Package(
         ),
         .target(
             name: "XCGrapherLib", // Main source added to a separate framework for testability reasons
-            dependencies: []
+            dependencies: [
+                "XCGrapherPluginSupport",
+            ]
+        ),
+        .target(
+            name: "XCGrapherModuleImportPlugin",
+            dependencies: [
+                "XCGrapherPluginSupport",
+            ]
         ),
         .testTarget(
             name: "XCGrapherLibTests",

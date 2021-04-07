@@ -1,5 +1,6 @@
 
 import Foundation
+import XCGrapherPluginSupport
 
 protocol DependencyManager {
     /// Asks the dependency manager if it is responsible for managing the framework named `module`.
@@ -9,17 +10,8 @@ protocol DependencyManager {
     /// from the returned list to discover it's dependencies ad infinitum.
     func dependencies(of module: String) -> [String]
 
-    /// Info used when rendering the dependency graph image
-    var interfaceTraits: DependencyManagerTraits { get }
-}
-
-struct DependencyManagerTraits {
-    /// The color of the line, e.g. #FF0000
-    let edgeColor: String
-
-    static let `default` = DependencyManagerTraits(
-        edgeColor: "#FF0000"
-    )
+    /// The type of dependencies this DependencyManager managers
+    var pluginModuleType: XCGrapherImport.ModuleType { get }
 }
 
 extension Array where Element == DependencyManager {

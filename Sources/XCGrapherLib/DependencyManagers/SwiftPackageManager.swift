@@ -1,5 +1,6 @@
 
 import Foundation
+import XCGrapherPluginSupport
 
 struct SwiftPackageManager {
 
@@ -16,6 +17,10 @@ struct SwiftPackageManager {
 
 extension SwiftPackageManager: DependencyManager {
 
+    var pluginModuleType: XCGrapherImport.ModuleType {
+        .spm
+    }
+
     func isManaging(module: String) -> Bool {
         knownSPMTargets.contains { $0.name == module }
     }
@@ -23,10 +28,6 @@ extension SwiftPackageManager: DependencyManager {
     func dependencies(of module: String) -> [String] {
         guard let target = knownSPMTargets.first(where: { $0.name == module }) else { return [] }
         return ImportFinder(fileList: target.allSourceFiles).allImportedModules()
-    }
-
-    var interfaceTraits: DependencyManagerTraits {
-        .init(edgeColor: "#F05138") // The Swift logo colour
     }
 
 }

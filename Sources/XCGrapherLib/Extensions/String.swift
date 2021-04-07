@@ -21,6 +21,10 @@ extension String {
         return result
     }
 
+    func lastPathComponent() -> String {
+        components(separatedBy: "/").last ?? ""
+    }
+
     func breakIntoLines() -> [String] {
         components(separatedBy: .newlines)
     }

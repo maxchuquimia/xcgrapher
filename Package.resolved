@@ -9,6 +9,15 @@
           "revision": "831ed5e860a70e745bc1337830af4786b2576881",
           "version": "0.4.1"
         }
+      },
+      {
+        "package": "XCGrapherPluginSupport",
+        "repositoryURL": "https://github.com/maxchuquimia/XCGrapherPluginSupport",
+        "state": {
+          "branch": null,
+          "revision": "c895e3b59d74dac4b8f04e7bebd9dc07ef80d17e",
+          "version": "0.0.5"
+        }
       }
     ]
   },

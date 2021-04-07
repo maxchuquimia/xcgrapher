@@ -31,4 +31,12 @@ final class StringExtensionTests: XCTestCase {
         XCTAssertEqual(sut("abc")(), ["abc"])
     }
 
+    func testLastPathComponent() {
+        let sut = String.lastPathComponent
+
+        XCTAssertEqual(sut("a")(), "a")
+        XCTAssertEqual(sut("a/b/c")(), "c")
+        XCTAssertEqual(sut("a/b.swift")(), "b.swift")
+    }
+
 }

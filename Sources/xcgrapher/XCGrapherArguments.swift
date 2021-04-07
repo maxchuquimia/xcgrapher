@@ -20,6 +20,9 @@ struct xcgrapher: ParsableArguments {
     @Option(name: .shortAndLong, help: "The path to which the output PNG should be written")
     public var output: String = "/tmp/xcgrapher.png"
 
+    @Option(name: .long, help: "The path to an XCGrapherPlugin-conforming dylib. Passing this option will override xcgrapher's default behaviour and use the plugin for consolidating the node tree instead.")
+    public var plugin: String = "/usr/local/lib/libXCGrapherModuleImportPlugin.dylib"
+
     @Flag(name: .long, help: "Include Apple frameworks in the graph (for --target and readable-source --spm packages)")
     public var apple: Bool = false
 
