@@ -12,6 +12,7 @@ final class XCGrapherTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
+
         let someAppRoot = ConcreteGrapherOptions.someAppRoot
         if !FileManager.default.directoryExists(atPath: someAppRoot.appendingPathComponent("Pods")) {
             XCTFail("Run `pod install` in \(someAppRoot) before running these tests.")
@@ -32,7 +33,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.pods
@@ -46,7 +47,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.spm
@@ -61,7 +62,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.spm + KnownEdges.pods
@@ -75,7 +76,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.apple
@@ -90,7 +91,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.apple + KnownEdges.spm + KnownEdges.appleFromSPM
@@ -106,7 +107,7 @@ final class XCGrapherTests: XCTestCase {
 
         // WHEN we generate a digraph
         try? sut(options)
-        let digraph = try String(contentsOfFile: "/tmp/xcgrapher.dot")
+        let digraph = try String(contentsOfFile: dotfile)
 
         // THEN the digraph only contains these edges
         let expectedEdges = KnownEdges.apple + KnownEdges.spm + KnownEdges.appleFromSPM + KnownEdges.pods + KnownEdges.appleFromPods
@@ -133,7 +134,7 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
     var spm: Bool = false
     var pods: Bool = false
     var force: Bool = false
-    var plugin: String? = nil
+    var plugin: String = defaultXCGrapherPluginLocation()
 }
 
 private enum KnownEdges {

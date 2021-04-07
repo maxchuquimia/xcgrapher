@@ -4,14 +4,13 @@ import Foundation
 public enum XCGrapher {
 
     public static func run(with options: XCGrapherOptions) throws {
-        let pluginHandler: PluginSupport
-        if let plugin = options.plugin {
-            Log("Loading plugin \(plugin)...")
-            pluginHandler = try PluginSupport(pluginPath: plugin)
-            Log("... success!")
-        } else {
-            pluginHandler = PluginSupport(plugin: DefaultPlugin())
-        }
+
+        // MARK: - Load the plugin
+
+        Log("Loading plugin \(options.plugin)")
+        let pluginHandler = try PluginSupport(pluginPath: options.plugin)
+
+        // MARK: - Prepare the --target source file list
         
         Log("Generating list of source files in \(options.target)")
         let xcodeproj = Xcodeproj(projectFile: options.project, target: options.target)

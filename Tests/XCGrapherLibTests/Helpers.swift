@@ -1,5 +1,6 @@
 
 import XCTest
+import class Foundation.Bundle
 @testable import XCGrapherLib
 
 /// Asserts that the `digraph` is made up of **ONLY** the `edges` and nothing more
@@ -20,4 +21,20 @@ func XCGrapherAssertDigraphIsMadeFromEdges(_ digraph: String, _ edges: [(String,
     if !digraphEdgeStrings.isEmpty {
         XCTFail("The digraph contains unexpected edges: \(digraphEdgeStrings)")
     }
+}
+
+/// Finds the location of the products that were built in order for the test to run
+func productsDirectory() -> String {
+    Bundle.allBundles
+        .first { $0.bundlePath.hasSuffix(".xctest") }!
+        .bundleURL
+        .deletingLastPathComponent()
+        .path
+}
+
+func defaultXCGrapherPluginLocation() -> String {
+    productsDirectory()
+        .appendingPathComponent("PackageFrameworks")
+        .appendingPathComponent("XCGrapherModuleImportPlugin.framework")
+        .appendingPathComponent("XCGrapherModuleImportPlugin")
 }
