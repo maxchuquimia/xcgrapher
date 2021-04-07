@@ -16,6 +16,7 @@ This produces the following image:
 You could also pass `--apple` to include native frameworks in the graph. See `xcgrapher --help` for more options.
 
 ### Installation
+⚠️ `brew install xcgrapher` is currently not working, please `make install` for now instead~
 ```sh
 brew tap maxchuquimia/scripts
 brew install xcgrapher
