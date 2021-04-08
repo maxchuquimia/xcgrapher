@@ -21,7 +21,7 @@ struct xcgrapher: ParsableArguments {
     public var output: String = "/tmp/xcgrapher.png"
 
     @Option(name: .long, help: "The path to an XCGrapherPlugin-conforming dylib. Passing this option will override xcgrapher's default behaviour and use the plugin for consolidating the node tree instead.")
-    public var plugin: String = "/usr/local/lib/libXCGrapherModuleImportPlugin.dylib"
+    public var plugin: String = DEFAULT_PLUGIN_LOCATION // If you're getting an error here run `make configure` to generate DEFAULT_PLUGIN_LOCATION
 
     @Flag(name: .long, help: "Include Apple frameworks in the graph (for --target and readable-source --spm packages)")
     public var apple: Bool = false

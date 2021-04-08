@@ -1,8 +1,12 @@
-bindir = /usr/local/bin
-libdir = /usr/local/lib
+prefix ?= /usr/local
+bindir = $(prefix)/bin
+libdir = $(prefix)/lib
 buildroot = $(shell swift build -c release --show-bin-path)
 
-build:
+configure:
+	echo "let DEFAULT_PLUGIN_LOCATION=\"$(libdir)/libXCGrapherModuleImportPlugin.dylib\"" > Sources/xcgrapher/Generated.swift
+
+build: configure
 	swift build -c release --disable-sandbox
 
 install: build
@@ -18,5 +22,6 @@ uninstall:
 
 clean:
 	rm -rf .build
+	rm Sources/xcgrapher/Generated.swift
 
-.PHONY: build install uninstall clean
+.PHONY: build install uninstall clean configure
