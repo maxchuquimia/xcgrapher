@@ -31,14 +31,14 @@ public class XCGrapherModuleImportPlugin: XCGrapherPlugin {
         return [importInfo]
     }
 
-    public override func makeEdges(from nodes: [Any]) throws -> [XCGrapherEdge] {
-        nodes
+    public override func makeArrows(from processingResults: [Any]) throws -> [XCGrapherArrow] {
+        processingResults
             // This is safe because we only ever returned an `ImportInfo` from the process(x:) functions above
             .map { $0 as! ImportInfo }
 
             // For every item returned from a process(x:) function, make an edge (arrow) from the importing module to the imported module.
             .map {
-                XCGrapherEdge(
+                XCGrapherArrow(
                     origin: $0.importerModuleName,
                     destination: $0.importedModuleName,
                     color: $0.color

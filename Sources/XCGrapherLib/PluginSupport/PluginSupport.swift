@@ -32,7 +32,7 @@ class PluginSupport {
                 filename: file.lastPathComponent(),
                 filepath: file,
                 fileContents: try String(contentsOfFile: file),
-                source: .target(name: target)
+                origin: .target(name: target)
             )
 
             let _nodes = try plugin_process(file: pluginFile)
@@ -70,7 +70,7 @@ class PluginSupport {
 
         // MARK: - Finish up
 
-        let edges = try plugin_makeEdges(from: nodes)
+        let edges = try plugin_makeArrows(from: nodes)
         for edge in Set(edges) {
             digraph.addEdge(from: edge.origin, to: edge.destination, color: edge.color)
         }
@@ -101,7 +101,7 @@ private extension PluginSupport {
                     filename: file.lastPathComponent(),
                     filepath: file,
                     fileContents: try String(contentsOfFile: file),
-                    source: .spm(importName: module)
+                    origin: .spm(importName: module)
                 )
 
                 let _nodes = try plugin_process(file: pluginFile)
@@ -168,9 +168,9 @@ private extension PluginSupport {
         }
     }
 
-    func plugin_makeEdges(from nodes: [Any]) throws -> [XCGrapherEdge] {
+    func plugin_makeArrows(from processingResults: [Any]) throws -> [XCGrapherArrow] {
         do {
-            return try plugin.makeEdges(from: nodes)
+            return try plugin.makeArrows(from: processingResults)
         } catch {
             LogError("The plugin function \(type(of: plugin)).makeEdges(from:) threw an error: \(error)")
             throw error

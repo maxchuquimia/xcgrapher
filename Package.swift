@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.4.0")),
-        .package(url: "https://github.com/maxchuquimia/XCGrapherPluginSupport", .upToNextMinor(from: "0.0.5")),
+        .package(url: "https://github.com/maxchuquimia/XCGrapherPluginSupport", .upToNextMinor(from: "0.0.6")),
     ],
     targets: [
         .target(
