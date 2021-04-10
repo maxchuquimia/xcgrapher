@@ -16,14 +16,14 @@ This produces the following image:
 You could also pass `--apple` to include native frameworks in the graph. See `xcgrapher --help` for more options.
 
 ### Installation
-⚠️ `brew install xcgrapher` is currently not working, please `make install` for now instead~
+
 ```sh
 brew tap maxchuquimia/scripts
 brew install xcgrapher
 gem install xcodeproj # If you use Cocoapods you probably don't need to do this
 ```
 
-Or, just clone the project and `make install`. **Note that whilst the project does compile and tests pass in Xcode, it cannot be run directly as some environment variables are missing.** I recommend simply running `make install` when adding new features to this repo.
+Or, just clone the project and `make install`.
 
 ## Custom Graphs
 What if (for example) your team has it's own property wrappers for dependency injection? You can graph it's usage that too!
@@ -50,3 +50,9 @@ For full documentation take a look at the [XCGrapherPluginSupport](https://githu
 
 #### Carthage
 Carthage dependencies are currently unsupported. Need it? Add it! Conform to the `DependencyManager` protocol and have a look at the usage of `SwiftPackageManager`.
+
+## Notes on Development
+Here's a few things to bear in mind if you're adding a feature:
+
+- Run `make configure` before trying to build or run tests from Xcode (this is done automatically before `make build` or `make install`)
+- Tests pass in Xcode, however you can't run the project from within Xcode (due to enivironment variables missing). When developing I like to just `make install` after unit tests are passing and then do my manual testing from the command line.
