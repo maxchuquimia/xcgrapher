@@ -17,7 +17,7 @@ struct Xcodeproj {
 extension Xcodeproj: ShellTask {
 
     var stringRepresentation: String {
-        "ruby -r xcodeproj -e 'Xcodeproj::Project.open(\"\(projectFile)\").targets.filter do |t| t.name == \"\(target)\" end.first.source_build_phase.files.to_a.each do |f| puts f.file_ref.real_path.to_s end'"
+        "ruby -r xcodeproj -e 'Xcodeproj::Project.open(\"\(projectFile)\").targets.filter do |t| t.name == \"\(target)\" end.first.source_build_phase.files.to_a.reject do |f| f.file_ref.nil? end.each do |f| puts f.file_ref.real_path.to_s end'"
     }
 
     var commandNotFoundInstructions: String {
