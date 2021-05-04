@@ -12,15 +12,26 @@ public enum XCGrapher {
 
         // MARK: - Prepare the --target source file list
         
-        Log("Generating list of source files in \(options.target)")
-        let xcodeproj = Xcodeproj(projectFile: options.project, target: options.target)
-        let allSourceFiles = try xcodeproj.compileSourcesList()
+        Log("Generating list of source files in \(options.startingPoint.localisedName)")
+        var allSourceFiles: [FileManager.Path] = []
+        switch options.startingPoint {
+        case let .xcodeProject(project):
+            let xcodeproj = Xcodeproj(projectFile: project, target: options.target)
+            allSourceFiles = try xcodeproj.compileSourcesList()
+        case let .swiftPackage(packagePath):
+            let package = SwiftPackage(clone: packagePath)
+            guard let target = try package.targets().first(where: { $0.name == options.target }) else { die("Could not locate target '\(options.target)'") }
+            allSourceFiles = target.allSourceFiles
+        }
 
         // MARK: - Create dependency manager lookups
 
-        if options.spm {
+        if options.spm || options.startingPoint.isSPM {
             Log("Building Swift Package list")
-            let xcodebuild = Xcodebuild(projectFile: options.project, target: options.target)
+            // TODO: finish
+            // swift build --package-path Tests/SampleProjects/SomePackage --product SomePackage
+            // then use .build/checkouts for BUILD_DIR
+            let xcodebuild = Xcodebuild(projectOrPackage: options.startingPoint.path, target: options.target)
             let swiftPackageClones = try xcodebuild.swiftPackageDependencies()
             let swiftPackageManager = try SwiftPackageManager(packageClones: swiftPackageClones)
             pluginHandler.swiftPackageManager = swiftPackageManager

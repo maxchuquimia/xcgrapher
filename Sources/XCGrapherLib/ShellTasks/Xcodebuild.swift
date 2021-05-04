@@ -6,6 +6,11 @@ struct Xcodebuild {
     let projectFile: FileManager.Path
     let target: String
 
+    init(projectOrPackage path: FileManager.Path, target: String) {
+        self.projectFile = path
+        self.target = target
+    }
+
     func swiftPackageDependencies() throws -> [FileManager.Path] {
         // Clone all the packages into $DERIVED_DATA/SourcePackages/checkouts
         let output = try execute()
