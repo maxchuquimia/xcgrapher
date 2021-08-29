@@ -11,17 +11,16 @@ public enum XCGrapher {
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
-        
         Log("Generating list of source files in \(options.startingPoint.localisedName)")
-        var allSourceFiles: [FileManager.Path] = []
+        var sources: [FileManager.Path] = []
         switch options.startingPoint {
         case let .xcodeProject(project):
             let xcodeproj = Xcodeproj(projectFile: project, target: options.target)
-            allSourceFiles = try xcodeproj.compileSourcesList()
+            sources = try xcodeproj.compileSourcesList()
         case let .swiftPackage(packagePath):
             let package = SwiftPackage(clone: packagePath)
             guard let target = try package.targets().first(where: { $0.name == options.target }) else { die("Could not locate target '\(options.target)'") }
-            allSourceFiles = target.allSourceFiles
+            sources = target.sources
         }
 
         // MARK: - Create dependency manager lookups
@@ -66,7 +65,7 @@ public enum XCGrapher {
 
         let digraph = try pluginHandler.generateDigraph(
             target: options.target,
-            projectSourceFiles: allSourceFiles
+            projectSourceFiles: sources
         )
 
         // MARK: - Writing
