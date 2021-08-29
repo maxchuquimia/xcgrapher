@@ -10,7 +10,6 @@ protocol ShellTask {
 }
 
 extension ShellTask {
-
     @discardableResult
     func execute() throws -> String {
         let task = Process()
@@ -39,7 +38,6 @@ extension ShellTask {
             throw CommandError.failure(stderr: String(data: errorOutput, encoding: .utf8)!)
         }
     }
-
 }
 
 enum CommandError: LocalizedError {
@@ -52,5 +50,4 @@ enum CommandError: LocalizedError {
         case let .commandNotFound(message): return message
         }
     }
-
 }

@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "xcgrapher",
     platforms: [
-        .macOS(.v10_15)
+        .macOS(.v10_15),
     ],
     products: [
         .executable(name: "xcgrapher", targets: ["xcgrapher"]),
@@ -20,7 +20,7 @@ let package = Package(
             name: "xcgrapher",
             dependencies: [
                 "XCGrapherLib",
-                .product(name: "ArgumentParser", package: "swift-argument-parser")
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]
         ),
         .target(

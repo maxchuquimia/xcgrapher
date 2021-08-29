@@ -1,9 +1,8 @@
 
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class ScannerTests: XCTestCase {
-
     var sut: Scanner.Builder!
 
     override func setUpWithError() throws {
@@ -58,12 +57,11 @@ final class ScannerTests: XCTestCase {
 
     func testScanAndStoreUpToCharacters() {
         let given = "?!@#abc@?@!"
-        
+
         sut.scanAndStoreUpToCharacters(from: CharacterSet.alphanumerics)
         XCTAssertEqual(sut.execute(on: given), "?!@#")
 
         sut.scanAndStoreUpToCharacters(from: CharacterSet.alphanumerics.inverted)
         XCTAssertEqual(sut.execute(on: given), "?!@#abc")
     }
-
 }

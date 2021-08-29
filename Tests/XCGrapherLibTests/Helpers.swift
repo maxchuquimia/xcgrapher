@@ -1,7 +1,7 @@
 
-import XCTest
 import class Foundation.Bundle
 @testable import XCGrapherLib
+import XCTest
 
 /// Asserts that the `digraph` is made up of **ONLY** the `edges` and nothing more
 func XCGrapherAssertDigraphIsMadeFromEdges(_ digraph: String, _ edges: [(String, String)], file: StaticString = #file, line: UInt = #line) {
@@ -11,7 +11,7 @@ func XCGrapherAssertDigraphIsMadeFromEdges(_ digraph: String, _ edges: [(String,
 
     for (edgeFrom, edgeTo) in edges {
         let expectedEdge = "\"\(edgeFrom)\" -> \"\(edgeTo)\""
-        guard let lineWithExpectedEdge = digraphEdgeStrings.firstIndex(where: { $0.contains(expectedEdge) } ) else {
+        guard let lineWithExpectedEdge = digraphEdgeStrings.firstIndex(where: { $0.contains(expectedEdge) }) else {
             XCTFail("The digraph does not contain the edge \(expectedEdge)", file: file, line: line)
             continue
         }

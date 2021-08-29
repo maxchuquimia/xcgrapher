@@ -3,7 +3,6 @@ import Foundation
 import XCGrapherPluginSupport
 
 class PluginSupport {
-
     let plugin: XCGrapherPlugin
 
     var swiftPackageManager: SwiftPackageManager?
@@ -40,8 +39,8 @@ class PluginSupport {
         }
 
         for module in targetImports {
-            
             // MARK: - Swift Package Manager
+
             // Also handles Apple frameworks imported by Swift Packages
             if swiftPackageManager?.isManaging(module: module) == true {
                 var previouslyEncounteredModules: Set<String> = []
@@ -49,12 +48,14 @@ class PluginSupport {
             }
 
             // MARK: - Cocoapods
+
             else if cocoapodsManager?.isManaging(module: module) == true {
                 var previouslyEncounteredModules: Set<String> = []
                 try recurseCocoapods(from: module, importedBy: target, importerType: .target, building: &nodes, skipping: &previouslyEncounteredModules)
             }
 
             // MARK: - Apple
+
             // (only Apple frameworks imported by the main --target)
             else if nativeManager?.isManaging(module: module) == true {
                 let _nodes = try plugin_process(library: XCGrapherImport(moduleName: module, importerName: target, moduleType: .apple, importerType: .target))
@@ -77,13 +78,11 @@ class PluginSupport {
 
         return digraph
     }
-
 }
 
 // MARK: - Recursive Functions
 
 private extension PluginSupport {
-
     func recurseSwiftPackages(from module: String, importedBy importer: String, importerType: XCGrapherImport.ModuleType, building nodeList: inout [Any], skipping modulesToSkip: inout Set<String>) throws {
         if swiftPackageManager?.isManaging(module: module) == true {
             // `module` is a Swift Package and `importer` is either a Swift Package or the main --target
@@ -141,13 +140,11 @@ private extension PluginSupport {
             try recurseCocoapods(from: podImport, importedBy: module, importerType: .cocoapods, building: &nodeList, skipping: &modulesToSkip)
         }
     }
-
 }
 
 // MARK: - Plugin Caller Proxies
 
 private extension PluginSupport {
-
     func plugin_process(library: XCGrapherImport) throws -> [Any] {
         guard library.importerName != library.moduleName else { return [] } // Filter when the library imports itself
 
@@ -176,5 +173,4 @@ private extension PluginSupport {
             throw error
         }
     }
-
 }

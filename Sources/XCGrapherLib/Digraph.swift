@@ -9,7 +9,6 @@ import Foundation
 /// }
 /// ```
 class Digraph {
-
     /// The name of the digraph structure
     let name: String
 
@@ -38,7 +37,7 @@ class Digraph {
     func build() -> String {
         var lines = ["digraph \(name) {"]
         lines.append("")
-        lines.append("  graph [ nodesep = 0.5, ranksep = 4, overlap = false, splines = true ]")//splines=ortho,
+        lines.append("  graph [ nodesep = 0.5, ranksep = 4, overlap = false, splines = true ]") // splines=ortho,
         lines.append("  node [ shape = box ]")
         lines.append("")
         lines.append(contentsOf: indentedEdgeStrings)
@@ -46,11 +45,9 @@ class Digraph {
         lines.append("}")
         return lines.joined(separator: "\n")
     }
-
 }
 
 private extension Digraph {
-
     struct Edge {
         let a: String
         let b: String
@@ -62,7 +59,7 @@ private extension Digraph {
             if let color = color {
                 attributes["color"] = "\"\(color)\""
             }
-            return base + (attributes.isEmpty ? "" : " [ \(attributes.map({ $0 + "=" + $1 }).joined(separator: ", ")) ]")
+            return base + (attributes.isEmpty ? "" : " [ \(attributes.map { $0 + "=" + $1 }.joined(separator: ", ")) ]")
         }
     }
 
@@ -71,5 +68,4 @@ private extension Digraph {
             .map { "  ".appending($0.string) }
             .sortedAscendingCaseInsensitively()
     }
-
 }

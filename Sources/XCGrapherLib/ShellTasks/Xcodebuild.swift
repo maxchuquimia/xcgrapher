@@ -2,7 +2,6 @@
 import Foundation
 
 struct Xcodebuild {
-
     let projectFile: FileManager.Path
     let target: String
 
@@ -30,11 +29,9 @@ struct Xcodebuild {
             .appending(checkoutsDir) // We also need to check the checkouts directory itself - it seems Realm unpacks itself weirdly and puts it's Package.swift in the checkouts folder :eye_roll:
             .filter { FileManager.default.fileExists(atPath: $0.appendingPathComponent("Package.swift")) }
     }
-
 }
 
 extension Xcodebuild: ShellTask {
-
     var stringRepresentation: String {
         "xcodebuild -project \"\(projectFile)\" -target \"\(target)\" -showBuildSettings"
     }
@@ -42,5 +39,4 @@ extension Xcodebuild: ShellTask {
     var commandNotFoundInstructions: String {
         "Missing command 'xcodebuild'"
     }
-
 }

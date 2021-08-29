@@ -1,9 +1,8 @@
 
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class FileManagerExtensionTests: XCTestCase {
-
     func testDirectoryExists() {
         let sut = FileManager.default.directoryExists(atPath:)
 
@@ -16,5 +15,4 @@ final class FileManagerExtensionTests: XCTestCase {
         // This path does exist but it's not a directory
         XCTAssertFalse(sut("/bin/bash"))
     }
-
 }

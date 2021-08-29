@@ -3,7 +3,6 @@ import Foundation
 import XCGrapherPluginSupport
 
 struct SwiftPackageManager {
-
     let knownSPMTargets: [PackageDescription.Target]
 
     /// - Parameter packageClones: A list of directories, each a cloned SPM dependency.
@@ -12,11 +11,9 @@ struct SwiftPackageManager {
             try SwiftPackage(clone: $0).targets()
         }
     }
-
 }
 
 extension SwiftPackageManager: DependencyManager {
-
     var pluginModuleType: XCGrapherImport.ModuleType {
         .spm
     }
@@ -29,5 +26,4 @@ extension SwiftPackageManager: DependencyManager {
         guard let target = knownSPMTargets.first(where: { $0.name == module }) else { return [] }
         return ImportFinder(fileList: target.allSourceFiles).allImportedModules()
     }
-
 }

@@ -4,7 +4,6 @@ import XCGrapherPluginSupport
 
 // Adapted from https://theswiftdev.com/building-and-loading-dynamic-libraries-at-runtime-in-swift/ (removed need for the builder pattern / simplified what is needed within the plugin itself)
 enum PluginLoader {
-
     enum LoadError: LocalizedError {
         case libraryNotFound(path: FileManager.Path)
         case unableToOpen(reason: String)
@@ -18,7 +17,6 @@ enum PluginLoader {
             case let .symbolNotFound(symbol): return prefix + "symbol \(symbol) not found."
             }
         }
-
     }
 
     private typealias MakeFunction = @convention(c) () -> UnsafeMutableRawPointer
@@ -26,9 +24,9 @@ enum PluginLoader {
     static func plugin(at path: FileManager.Path) throws -> XCGrapherPlugin {
         guard FileManager.default.fileExists(atPath: path) else { throw LoadError.libraryNotFound(path: path) }
 
-        let openResult = dlopen(path, RTLD_NOW|RTLD_LOCAL)
+        let openResult = dlopen(path, RTLD_NOW | RTLD_LOCAL)
 
-        guard openResult != nil else { throw LoadError.unableToOpen(reason: String(format: "%s", dlerror() ?? "??" )) }
+        guard openResult != nil else { throw LoadError.unableToOpen(reason: String(format: "%s", dlerror() ?? "??")) }
 
         defer { dlclose(openResult) }
 
@@ -42,5 +40,4 @@ enum PluginLoader {
         let plugin = Unmanaged<XCGrapherPlugin>.fromOpaque(pluginPointer).takeRetainedValue()
         return plugin // This is the custom subclass of XCGrapherPlugin
     }
-
 }

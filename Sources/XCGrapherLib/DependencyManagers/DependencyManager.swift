@@ -15,9 +15,7 @@ protocol DependencyManager {
 }
 
 extension Array where Element == DependencyManager {
-
     func manager(of module: String) -> DependencyManager? {
         first { $0.isManaging(module: module) }
     }
-
 }

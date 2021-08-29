@@ -3,7 +3,6 @@ import Foundation
 import XCGrapherPluginSupport
 
 extension XCGrapherImport.ModuleType {
-
     var customColor: String {
         switch self {
         case .target: return "#000000" // Black
@@ -13,5 +12,4 @@ extension XCGrapherImport.ModuleType {
         case .other: return "#FF0000" // Red (something went wrong)
         }
     }
-
 }

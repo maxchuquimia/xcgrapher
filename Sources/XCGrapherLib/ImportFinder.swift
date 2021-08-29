@@ -3,7 +3,6 @@ import Foundation
 
 // Must also handle `@testable import X`, `import class X.Y` etc
 struct ImportFinder {
-
     let fileList: [FileManager.Path]
 
     /// Read each file in `fileList` and search for `import X`, `@testable import X`, `import class X.Y` etc.
@@ -36,6 +35,4 @@ struct ImportFinder {
             .unique()
             .sortedAscendingCaseInsensitively()
     }
-
 }
-

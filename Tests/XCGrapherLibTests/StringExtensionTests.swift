@@ -1,9 +1,8 @@
 
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class StringExtensionTests: XCTestCase {
-
     func testScanBuilder() {
         let given = "abc"
         let sut = given.scan
@@ -38,5 +37,4 @@ final class StringExtensionTests: XCTestCase {
         XCTAssertEqual(sut("a/b/c")(), "c")
         XCTAssertEqual(sut("a/b.swift")(), "b.swift")
     }
-
 }

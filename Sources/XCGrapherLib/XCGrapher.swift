@@ -2,16 +2,14 @@
 import Foundation
 
 public enum XCGrapher {
-
     public static func run(with options: XCGrapherOptions) throws {
-
         // MARK: - Load the plugin
 
         Log("Loading plugin \(options.plugin)")
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
-        
+
         Log("Generating list of source files in \(options.target)")
         let xcodeproj = Xcodeproj(projectFile: options.project, target: options.target)
         let allSourceFiles = try xcodeproj.compileSourcesList()
@@ -67,5 +65,4 @@ public enum XCGrapher {
 
         Log("Result written to", options.output)
     }
-
 }

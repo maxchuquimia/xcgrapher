@@ -5,7 +5,6 @@ import XCTest
 
 /// `sut` fail to execute `dot`, however we don't care as we are just reading the output text file
 final class XCGrapherTests: XCTestCase {
-
     private var sut: ((XCGrapherOptions) throws -> Void)!
     private var options: ConcreteGrapherOptions!
     let dotfile = "/tmp/xcgrapher.dot"
@@ -114,11 +113,9 @@ final class XCGrapherTests: XCTestCase {
 
         XCGrapherAssertDigraphIsMadeFromEdges(digraph, expectedEdges)
     }
-
 }
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
-
     static let someAppRoot = URL(fileURLWithPath: #file)
         .deletingLastPathComponent()
         .deletingLastPathComponent()
@@ -138,7 +135,6 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
 }
 
 private enum KnownEdges {
-
     static let pods = [
         ("SomeApp", "RxSwift"),
         ("SomeApp", "RxCocoa"),
@@ -193,5 +189,4 @@ private enum KnownEdges {
     static let appleFromPods: [(String, String)] = [
         // Unsupported at this time
     ]
-
 }

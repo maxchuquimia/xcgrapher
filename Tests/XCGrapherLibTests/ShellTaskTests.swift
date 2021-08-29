@@ -1,9 +1,8 @@
 
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class ShellTaskTests: XCTestCase {
-
     private var sut: ShellTask! { mock }
     private var mock: ConcreteShellTask!
 
@@ -47,7 +46,6 @@ final class ShellTaskTests: XCTestCase {
             XCTFail("Unexpected error \(error)")
         }
     }
-
 }
 
 private class ConcreteShellTask: ShellTask {

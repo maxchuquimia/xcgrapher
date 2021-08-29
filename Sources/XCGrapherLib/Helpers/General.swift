@@ -12,11 +12,11 @@ public func die(_ message: String? = nil, file: String = #file, function: String
 
 func Log(_ items: Any..., dim: Bool = false, file: String = #file) {
     let color = dim ? Colors.dim : ""
-    print(items.reduce(color + logPrefix(file: file), { $0 + " \($1)" }) + Colors.reset)
+    print(items.reduce(color + logPrefix(file: file)) { $0 + " \($1)" } + Colors.reset)
 }
 
 func LogError(_ items: Any..., file: String = #file) {
-    print(items.reduce(Colors.red + logPrefix(file: file), { $0 + " \($1)" }) + Colors.reset)
+    print(items.reduce(Colors.red + logPrefix(file: file)) { $0 + " \($1)" } + Colors.reset)
 }
 
 private func logPrefix(file: String) -> String {

@@ -2,7 +2,6 @@
 import Foundation
 
 extension String {
-
     func scan(buildOperations: (Scanner.Builder) -> Void) -> String {
         let builder = Scanner.Builder()
         buildOperations(builder)
@@ -12,9 +11,9 @@ extension String {
     func appendingPathComponent(_ component: String) -> String {
         var result = self
         let delimiter = "/"
-        if !result.hasSuffix(delimiter) && !component.hasPrefix(delimiter) {
+        if !result.hasSuffix(delimiter), !component.hasPrefix(delimiter) {
             result.append(delimiter)
-        } else if result.hasSuffix(delimiter) && component.hasPrefix(delimiter) {
+        } else if result.hasSuffix(delimiter), component.hasPrefix(delimiter) {
             result.removeLast()
         }
         result.append(component)
@@ -28,5 +27,4 @@ extension String {
     func breakIntoLines() -> [String] {
         components(separatedBy: .newlines)
     }
-
 }

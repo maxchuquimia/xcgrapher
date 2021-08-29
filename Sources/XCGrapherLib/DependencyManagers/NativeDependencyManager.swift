@@ -3,7 +3,6 @@ import Foundation
 import XCGrapherPluginSupport
 
 struct NativeDependencyManager {
-
     let allNativeFrameworks: [String]
 
     init() throws {
@@ -18,11 +17,9 @@ struct NativeDependencyManager {
             .map { $0.replacingOccurrences(of: ".framework", with: "") }
             .unique()
     }
-
 }
 
 extension NativeDependencyManager: DependencyManager {
-
     var pluginModuleType: XCGrapherImport.ModuleType {
         .apple
     }
@@ -31,8 +28,7 @@ extension NativeDependencyManager: DependencyManager {
         allNativeFrameworks.contains(module)
     }
 
-    func dependencies(of module: String) -> [String] {
+    func dependencies(of _: String) -> [String] {
         [] // Obviously we don't know how Apple's frameworks work internally
     }
-
 }

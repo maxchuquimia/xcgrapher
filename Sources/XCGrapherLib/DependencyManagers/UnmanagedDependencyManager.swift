@@ -4,22 +4,18 @@ import XCGrapherPluginSupport
 
 /// A dependency manager that always claims to be managing modules passed into it
 /// but never knows what their dependencies are.
-struct UnmanagedDependencyManager {
-
-}
+struct UnmanagedDependencyManager {}
 
 extension UnmanagedDependencyManager: DependencyManager {
-
     var pluginModuleType: XCGrapherImport.ModuleType {
         .other
     }
 
-    func isManaging(module: String) -> Bool {
+    func isManaging(module _: String) -> Bool {
         true
     }
 
-    func dependencies(of module: String) -> [String] {
+    func dependencies(of _: String) -> [String] {
         []
     }
-
 }
