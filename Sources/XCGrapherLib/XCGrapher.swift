@@ -28,11 +28,14 @@ public enum XCGrapher {
 
         if options.spm || options.startingPoint.isSPM {
             Log("Building Swift Package list")
-            // TODO: finish
-            // swift build --package-path Tests/SampleProjects/SomePackage --product SomePackage
-            // then use .build/checkouts for BUILD_DIR
-            let xcodebuild = Xcodebuild(projectOrPackage: options.startingPoint.path, target: options.target)
-            let swiftPackageClones = try xcodebuild.swiftPackageDependencies()
+            let swiftPackageDependencySource: SwiftPackageDependencySource = {
+                if options.startingPoint.isSPM {
+                    return SwiftBuild(packagePath: options.startingPoint.path, product: options.target)
+                } else {
+                    return Xcodebuild(projectFile: options.startingPoint.path, target: options.target)
+                }
+            }()
+            let swiftPackageClones = try swiftPackageDependencySource.swiftPackageDependencies()
             let swiftPackageManager = try SwiftPackageManager(packageClones: swiftPackageClones)
             pluginHandler.swiftPackageManager = swiftPackageManager
         }
