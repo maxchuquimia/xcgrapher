@@ -19,6 +19,15 @@ func LogError(_ items: Any..., file: String = #file) {
     print(items.reduce(Colors.red + logPrefix(file: file), { $0 + " \($1)" }) + Colors.reset)
 }
 
+func failWithContext<T>(attempt: @autoclosure () throws -> T, context: Any, file: String = #file) throws -> T {
+    do {
+        return try attempt()
+    } catch {
+        LogError("Error context:", String(describing: context), file: file)
+        throw error
+    }
+}
+
 private func logPrefix(file: String) -> String {
     let name = file.components(separatedBy: "/").last?.replacingOccurrences(of: ".swift", with: "") ?? "???"
     return "[\(name)]"

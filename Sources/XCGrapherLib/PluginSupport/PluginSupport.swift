@@ -31,7 +31,7 @@ class PluginSupport {
             let pluginFile = XCGrapherFile(
                 filename: file.lastPathComponent(),
                 filepath: file,
-                fileContents: try String(contentsOfFile: file),
+                fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (target: target, file: file)) ,
                 origin: .target(name: target)
             )
 
@@ -61,7 +61,7 @@ class PluginSupport {
                 nodes.append(contentsOf: _nodes)
             }
 
-            // Weird uknown cases
+            // Weird unknown cases
             else if unknownManager?.isManaging(module: module) == true {
                 let _nodes = try plugin_process(library: XCGrapherImport(moduleName: module, importerName: target, moduleType: .other, importerType: .target))
                 nodes.append(contentsOf: _nodes)
@@ -100,7 +100,7 @@ private extension PluginSupport {
                 let pluginFile = XCGrapherFile(
                     filename: file.lastPathComponent(),
                     filepath: file,
-                    fileContents: try String(contentsOfFile: file),
+                    fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (package: module, file: file)),
                     origin: .spm(importName: module)
                 )
 
