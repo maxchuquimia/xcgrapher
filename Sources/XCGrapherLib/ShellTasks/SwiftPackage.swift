@@ -8,7 +8,15 @@ struct SwiftPackage {
     func targets() throws -> [PackageDescription.Target] {
         let json = try execute()
         let jsonData = json.data(using: .utf8)!
-        let description = try JSONDecoder().decode(PackageDescription.self, from: jsonData)
+        var description = try JSONDecoder().decode(PackageDescription.self, from: jsonData)
+        description.targets = description.targets.map {
+            PackageDescription.Target(
+                name: $0.name,
+                path: description.path.appendingPathComponent($0.path),
+                sources: $0.sources,
+                type: $0.type
+            )
+        }
         return description.targets
     }
 
@@ -41,5 +49,5 @@ struct PackageDescription: Codable {
 
     let name: String
     let path: String
-    let targets: [Target]
+    var targets: [Target]
 }
