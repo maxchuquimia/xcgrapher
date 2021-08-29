@@ -1,4 +1,3 @@
-
 @testable import XCGrapherLib
 import XCTest
 

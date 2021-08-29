@@ -1,4 +1,3 @@
-
 import Foundation
 
 // Must also handle `@testable import X`, `import class X.Y` etc

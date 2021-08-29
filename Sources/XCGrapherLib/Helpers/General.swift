@@ -1,4 +1,3 @@
-
 import Foundation
 
 public func die(_ message: String? = nil, file: String = #file, function: String = #function, line: Int = #line) -> Never {

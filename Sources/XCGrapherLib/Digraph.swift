@@ -1,4 +1,3 @@
-
 import Foundation
 
 /// A class for generating a Digraph string file - e.g.
