@@ -57,7 +57,7 @@ struct xcgrapher: ParsableArguments {
 
         if !isRunningForXcodeProject {
             guard let package = package else { die("--project or --package must be provided.") }
-            guard !package.isEmpty == false else { die("--package is invalid") }
+            guard !package.isEmpty else { die("--package is invalid") }
             guard FileManager.default.fileExists(atPath: package.appendingPathComponent("Package.swift")) else { die("'\(package)' is not a valid Swift Package directory") }
         }
 
