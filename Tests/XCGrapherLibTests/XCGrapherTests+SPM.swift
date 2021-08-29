@@ -15,7 +15,7 @@ final class XCGrapherSPMTests: XCTestCase {
         sut = XCGrapher.run
         options = ConcreteGrapherOptions()
 
-        try? FileManager.default.removeItem(atPath: dotfile)
+        try FileManager.default.removeItem(atPath: dotfile)
     }
 
     func testSomeAppSPM() throws {
@@ -76,6 +76,7 @@ private enum KnownEdges {
         ("SomePackage", "Kingfisher"),
         ("SomePackage", "Moya"),
         ("Moya", "Alamofire"),
+        ("SomePackage", "Alamofire"),
     ]
 
     static let apple = [
@@ -84,7 +85,26 @@ private enum KnownEdges {
     ]
 
     static let appleFromSPM: [(String, String)] = [
-        // Unsupported at this time
+        ("Alamofire", "Combine"),
+        ("Alamofire", "CoreServices"),
+        ("Alamofire", "Foundation"),
+        ("Alamofire", "MobileCoreServices"),
+        ("Alamofire", "SystemConfiguration"),
+        ("Kingfisher", "Accelerate"),
+        ("Kingfisher", "AppKit"),
+        ("Kingfisher", "AVKit"),
+        ("Kingfisher", "Combine"),
+        ("Kingfisher", "CoreGraphics"),
+        ("Kingfisher", "CoreImage"),
+        ("Kingfisher", "CoreServices"),
+        ("Kingfisher", "Foundation"),
+        ("Kingfisher", "ImageIO"),
+        ("Kingfisher", "MobileCoreServices"),
+        ("Kingfisher", "SwiftUI"),
+        ("Kingfisher", "UIKit"),
+        ("Moya", "AppKit"),
+        ("Moya", "Foundation"),
+        ("Moya", "UIKit"),
     ]
 
 }
