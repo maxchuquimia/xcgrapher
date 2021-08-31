@@ -21,8 +21,8 @@ struct SwiftBuild: SwiftPackageDependencySource {
 
 extension SwiftBuild: ShellTask {
     var stringRepresentation: String {
-        // We need to first build the package (which implicitly resolves its dependencies), and then print the binary path via `--show-bin-path`
-        "swift build --package-path \"\(packagePath)\" --product \"\(product)\" && swift build --package-path \"\(packagePath)\" --product \"\(product)\" --show-bin-path"
+        // We need to first resolve the package dependencies, and then print the binary path via `--show-bin-path`
+        "swift package resolve --package-path \"\(packagePath)\" && swift build --package-path \"\(packagePath)\" --product \"\(product)\" --show-bin-path"
     }
 
     var commandNotFoundInstructions: String {
