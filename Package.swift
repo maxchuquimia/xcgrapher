@@ -37,7 +37,10 @@ let package = Package(
         ),
         .testTarget(
             name: "XCGrapherLibTests",
-            dependencies: ["XCGrapherLib"]
+            dependencies: ["XCGrapherLib"],
+            resources: [
+                .process("Resources"),
+            ]
         ),
     ]
 )
