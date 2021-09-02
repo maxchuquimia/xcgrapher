@@ -59,7 +59,7 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
         .path
 
     var startingPoint: StartingPoint = .swiftPackage(somePackageRoot)
-    var target: String = "SomePackage"
+    var target: String = somePackageRoot.lastPathComponent()
     var podlock: String = ""
     var output: String = "/tmp/xcgraphertests.png"
     var apple: Bool = false
@@ -77,6 +77,7 @@ private enum KnownEdges {
         ("SomePackage", "Moya"),
         ("Moya", "Alamofire"),
         ("SomePackage", "Alamofire"),
+        ("SomePackage", "SomePackageDependency")
     ]
 
     static let apple = [
@@ -105,6 +106,8 @@ private enum KnownEdges {
         ("Moya", "AppKit"),
         ("Moya", "Foundation"),
         ("Moya", "UIKit"),
+        ("SomePackageDependency", "Foundation"),
+        ("SomePackageDependency", "CoreGraphics"),
     ]
 
 }

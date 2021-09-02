@@ -6,10 +6,18 @@ struct SwiftPackage {
     let clone: FileManager.Path
 
     func targets() throws -> [PackageDescription.Target] {
-        let json = try execute()
-        let jsonData = json.data(using: .utf8)!
-        let description = try JSONDecoder().decode(PackageDescription.self, from: jsonData)
-        return description.targets
+        return try packageDescription().targets
+    }
+
+    func packageDescription() throws -> PackageDescription {
+        do {
+            let json = try execute()
+            let jsonData = json.data(using: .utf8)!
+            return try JSONDecoder().decode(PackageDescription.self, from: jsonData)
+        } catch {
+            LogError(error)
+            throw error
+        }
     }
 
 }
