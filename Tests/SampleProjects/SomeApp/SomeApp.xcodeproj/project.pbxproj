@@ -27,6 +27,7 @@
 		55CB73502612D462000FB0B3 /* RxImports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB734F2612D462000FB0B3 /* RxImports.swift */; };
 		55CB73552612D4AF000FB0B3 /* Auth0Imports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB73542612D4AF000FB0B3 /* Auth0Imports.swift */; };
 		A7F769F045BDE665C9D46F0B /* Pods_SomeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F337E1111B60AEE48675B94C /* Pods_SomeApp.framework */; };
+		C573C93C26E060ED0023C39D /* SomePackageDependency in Frameworks */ = {isa = PBXBuildFile; productRef = C573C93B26E060ED0023C39D /* SomePackageDependency */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,7 @@
 			files = (
 				51A1711826169DB800A7C0FD /* RealmSwift in Frameworks */,
 				51A1711326169D3300A7C0FD /* ChartsDynamic in Frameworks */,
+				C573C93C26E060ED0023C39D /* SomePackageDependency in Frameworks */,
 				A7F769F045BDE665C9D46F0B /* Pods_SomeApp.framework in Frameworks */,
 				51A170EA26169BC000A7C0FD /* Lottie in Frameworks */,
 				51A1711A26169DB800A7C0FD /* Realm in Frameworks */,
@@ -196,6 +198,7 @@
 				51A1711226169D3300A7C0FD /* ChartsDynamic */,
 				51A1711726169DB800A7C0FD /* RealmSwift */,
 				51A1711926169DB800A7C0FD /* Realm */,
+				C573C93B26E060ED0023C39D /* SomePackageDependency */,
 			);
 			productName = SomeApp;
 			productReference = 55CB73222612D090000FB0B3 /* SomeApp.app */;
@@ -560,6 +563,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 51A1711626169DB800A7C0FD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
+		};
+		C573C93B26E060ED0023C39D /* SomePackageDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SomePackageDependency;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
