@@ -119,10 +119,7 @@ final class XCGrapherXcodeprojectTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    static let someAppRoot = URL(fileURLWithPath: #file)
-        .deletingLastPathComponent()
-        .deletingLastPathComponent()
-        .appendingPathComponent("SampleProjects")
+    static let someAppRoot = sampleProjectsDirectory
         .appendingPathComponent("SomeApp")
         .path
 

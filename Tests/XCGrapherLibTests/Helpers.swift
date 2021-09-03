@@ -39,6 +39,11 @@ func defaultXCGrapherPluginLocation() -> String {
         .appendingPathComponent("XCGrapherModuleImportPlugin")
 }
 
+let sampleProjectsDirectory = URL(string: #file.description)!
+    .deletingLastPathComponent()
+    .deletingLastPathComponent()
+    .appendingPathComponent("SampleProjects")
+
 extension Data {
     init(fromResourceNamed filename: String, extension: String) throws {
         let path = URL(fileURLWithPath: Bundle.module.path(forResource: filename, ofType: `extension`)!)

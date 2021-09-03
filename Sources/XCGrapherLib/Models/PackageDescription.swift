@@ -8,7 +8,7 @@ struct PackageDescription: Decodable {
 
     var localDependencies: [Dependency] {
         return dependencies.filter {
-            FileManager.default.fileExists(atPath: $0.url.absoluteString)
+            FileManager.default.fileExists(atPath: $0.url.path)
         }
     }
 

@@ -15,7 +15,7 @@ struct SwiftBuild: SwiftPackageDependencySource {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent("checkouts")
-        return checkoutsDirectory.absoluteString
+        return checkoutsDirectory.path
     }
 
     func swiftPackageDependencies() throws -> [FileManager.Path] {
@@ -31,7 +31,7 @@ struct SwiftBuild: SwiftPackageDependencySource {
         let localDependencies: [FileManager.Path] = try package
             .packageDescription()
             .localDependencies
-            .map { $0.url.absoluteString }
+            .map { $0.url.path }
         return remoteDependencies + localDependencies
     }
 }

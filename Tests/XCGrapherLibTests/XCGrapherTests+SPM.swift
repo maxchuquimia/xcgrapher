@@ -51,10 +51,7 @@ final class XCGrapherSPMTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    static let somePackageRoot = URL(fileURLWithPath: #file)
-        .deletingLastPathComponent()
-        .deletingLastPathComponent()
-        .appendingPathComponent("SampleProjects")
+    static let somePackageRoot = sampleProjectsDirectory
         .appendingPathComponent("SomePackage")
         .path
 
