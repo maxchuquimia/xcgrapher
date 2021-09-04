@@ -96,7 +96,7 @@ private extension PluginSupport {
             guard let package = swiftPackageManager?.knownSPMTargets.first(where: { $0.name == module }) else { return }
 
             // Give the plugin the opportunity to read the package's source files
-            for file in package.allSourceFiles {
+            for file in package.sources {
                 let pluginFile = XCGrapherFile(
                     filename: file.lastPathComponent(),
                     filepath: file,
@@ -109,7 +109,7 @@ private extension PluginSupport {
             }
 
             // Now recurse
-            let packageImports = ImportFinder(fileList: package.allSourceFiles).allImportedModules()
+            let packageImports = ImportFinder(fileList: package.sources).allImportedModules()
             for _module in packageImports {
                 try recurseSwiftPackages(from: _module, importedBy: module, importerType: .spm, building: &nodeList, skipping: &modulesToSkip)
             }

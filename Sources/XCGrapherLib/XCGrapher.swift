@@ -11,10 +11,10 @@ public enum XCGrapher {
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
-        
+
         Log("Generating list of source files in \(options.target)")
         let xcodeproj = Xcodeproj(projectFile: options.project, target: options.target)
-        let allSourceFiles = try xcodeproj.compileSourcesList()
+        let sources = try xcodeproj.compileSourcesList()
 
         // MARK: - Create dependency manager lookups
 
@@ -52,7 +52,7 @@ public enum XCGrapher {
 
         let digraph = try pluginHandler.generateDigraph(
             target: options.target,
-            projectSourceFiles: allSourceFiles
+            projectSourceFiles: sources
         )
 
         // MARK: - Writing
