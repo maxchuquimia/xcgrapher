@@ -1,15 +1,21 @@
 import Foundation
 
-struct PackageDescription: Decodable {
+struct PackageDescription: Codable {
     let name: String
     let path: String
     let targets: [Target]
 
-    struct Target: Decodable {
+    struct Target: Codable {
         let name: String
         let path: String
         let sources: [String]
         let type: String
+    }
+
+    init(name: String, path: String, targets: [Target]) {
+        self.name = name
+        self.path = path
+        self.targets = targets
     }
 
     init(from decoder: Decoder) throws {

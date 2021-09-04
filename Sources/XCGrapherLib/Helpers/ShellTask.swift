@@ -7,6 +7,25 @@ protocol ShellTask {
 
     /// A localised string to be displayed when the command cannot be found.
     var commandNotFoundInstructions: String { get }
+
+    /// Provides the opportunity to recover from an error
+    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery
+}
+
+extension ShellTask {
+
+    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery {
+        .unableToRecover
+    }
+
+}
+
+enum ShellTaskErrorRecovery {
+    /// The error could not be ignored and the program should be terminated
+    case unableToRecover
+
+    /// The error was non-fatal and the program should continue with `newOutput` as the shell task's output
+    case recovered(newOutput: String)
 }
 
 extension ShellTask {
@@ -36,8 +55,15 @@ extension ShellTask {
             LogError(commandNotFoundInstructions)
             throw CommandError.commandNotFound(message: commandNotFoundInstructions)
         } else {
-            LogError("The command failed with exit code \(task.terminationStatus)")
-            throw CommandError.failure(stderr: String(data: errorOutput, encoding: .utf8)!)
+            let error = String(data: errorOutput, encoding: .utf8)!
+            let recoveryOption = recover(from: error, with: task.terminationStatus)
+            switch recoveryOption {
+            case .unableToRecover:
+                LogError("The command failed with exit code \(task.terminationStatus)")
+                throw CommandError.failure(stderr: error)
+            case let .recovered(newOutput):
+                return newOutput
+            }
         }
     }
 
