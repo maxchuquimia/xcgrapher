@@ -4,7 +4,7 @@ import XCTest
 @testable import XCGrapherLib
 
 /// `sut` fail to execute `dot`, however we don't care as we are just reading the output text file
-final class XCGrapherXcodeprojectTests: XCTestCase {
+final class XCGrapherWorkspaceTests: XCTestCase {
 
     private var sut: ((XCGrapherOptions) throws -> Void)!
     private var options: ConcreteGrapherOptions!
@@ -122,8 +122,8 @@ final class XCGrapherXcodeprojectTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    var startingPoint: StartingPoint = .xcodeproj(path: SUT.xcodeproj.path, target: SUT.target, xcworkspacePath: nil)
-    var podlock: String = SUT.xcodeproj.parent.appendingPathComponent("Podfile.lock").path
+    var startingPoint: StartingPoint = .xcworkspace(path: SUT.workspace.path, scheme: SUT.scheme)
+    var podlock: String = SUT.workspace.parent.appendingPathComponent("Podfile.lock").path
     var output: String = "/tmp/xcgraphertests.png"
     var apple: Bool = false
     var spm: Bool = false
@@ -136,11 +136,11 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
 private enum KnownEdges {
 
     static let pods = [
-        (SUT.target, "RxSwift"),
-        (SUT.target, "RxCocoa"),
-        (SUT.target, "Auth0"),
-        (SUT.target, "Moya"),
-        (SUT.target, "NSObject_Rx"),
+        (SUT.scheme, "RxSwift"),
+        (SUT.scheme, "RxCocoa"),
+        (SUT.scheme, "Auth0"),
+        (SUT.scheme, "Moya"),
+        (SUT.scheme, "NSObject_Rx"),
         ("NSObject_Rx", "RxSwift"),
         ("RxCocoa", "RxSwift"),
         ("RxCocoa", "RxRelay"),
@@ -152,9 +152,10 @@ private enum KnownEdges {
     ]
 
     static let spm = [
-        (SUT.target, "Charts"),
-        (SUT.target, "RealmSwift"),
-        (SUT.target, "Lottie"),
+        (SUT.scheme, "Charts"),
+        (SUT.scheme, "RealmSwift"),
+        (SUT.scheme, "Lottie"),
+        (SUT.scheme, "SomePackageDependency"),
         ("RealmSwift", "Realm"),
         ("Charts", "Algorithms"),
         ("Algorithms", "RealModule"),
@@ -162,9 +163,9 @@ private enum KnownEdges {
     ]
 
     static let apple = [
-        (SUT.target, "Foundation"),
-        (SUT.target, "AVFoundation"),
-        (SUT.target, "UIKit"),
+        (SUT.scheme, "Foundation"),
+        (SUT.scheme, "AVFoundation"),
+        (SUT.scheme, "UIKit"),
     ]
 
     static let appleFromSPM = [
@@ -184,6 +185,8 @@ private enum KnownEdges {
         ("Charts", "Cocoa"),
         ("Charts", "Quartz"),
         ("Charts", "UIKit"),
+        ("SomePackageDependency", "Foundation"),
+        ("SomePackageDependency", "CoreGraphics"),
     ]
 
     static let appleFromPods: [(String, String)] = [

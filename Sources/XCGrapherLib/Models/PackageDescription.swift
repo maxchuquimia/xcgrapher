@@ -4,12 +4,23 @@ struct PackageDescription: Decodable {
     let name: String
     let path: String
     let targets: [Target]
+    let dependencies: [Dependency]
 
-    struct Target: Decodable {
+    var localDependencies: [Dependency] {
+        return dependencies.filter {
+            FileManager.default.fileExists(atPath: $0.url.path)
+        }
+    }
+
+    struct Target: Decodable, Hashable {
         let name: String
         let path: String
         let sources: [String]
         let type: String
+    }
+
+    struct Dependency: Decodable, Equatable {
+        let url: URL
     }
 
     init(from decoder: Decoder) throws {
@@ -32,10 +43,10 @@ struct PackageDescription: Decodable {
                 type: target.type
             )
         }
-
+        dependencies = try values.decode([Dependency].self, forKey: .dependencies)
     }
 
     enum CodingKeys: String, CodingKey {
-        case name, path, targets
+        case name, path, targets, dependencies
     }
 }

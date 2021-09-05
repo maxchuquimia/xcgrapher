@@ -14,9 +14,9 @@ protocol DependencyManager {
     var pluginModuleType: XCGrapherImport.ModuleType { get }
 }
 
-extension Array where Element == DependencyManager {
+extension Array where Element : DependencyManager {
 
-    func manager(of module: String) -> DependencyManager? {
+    func manager(of module: String) -> Element? {
         first { $0.isManaging(module: module) }
     }
 
