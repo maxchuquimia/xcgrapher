@@ -2,6 +2,7 @@
 import XCTest
 
 final class ArrayExtensionTests: XCTestCase {
+
     func testUnique() {
         let sut = Array<String>.unique
 
@@ -28,4 +29,5 @@ final class ArrayExtensionTests: XCTestCase {
         let output2 = sut(["ABC", "ABX", "abx", "abc"])()
         XCTAssertEqual(output2, ["ABC", "abc", "ABX", "abx"])
     }
+
 }

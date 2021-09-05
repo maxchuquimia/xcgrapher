@@ -11,7 +11,7 @@ public func makeXCGrapherPlugin() -> UnsafeMutableRawPointer {
 // MARK: - Custom Plugin
 
 public class XCGrapherModuleImportPlugin: XCGrapherPlugin {
-    override public func process(file _: XCGrapherFile) throws -> [Any] {
+    override public func process(file: XCGrapherFile) throws -> [Any] {
         [] // We don't care about reading file info manually for this particular plugin
     }
 

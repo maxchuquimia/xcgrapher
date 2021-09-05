@@ -10,11 +10,11 @@ extension UnmanagedDependencyManager: DependencyManager {
         .other
     }
 
-    func isManaging(module _: String) -> Bool {
+    func isManaging(module: String) -> Bool {
         true
     }
 
-    func dependencies(of _: String) -> [String] {
+    func dependencies(of module: String) -> [String] {
         []
     }
 }

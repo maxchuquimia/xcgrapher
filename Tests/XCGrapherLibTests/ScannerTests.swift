@@ -2,6 +2,7 @@
 import XCTest
 
 final class ScannerTests: XCTestCase {
+
     var sut: Scanner.Builder!
 
     override func setUpWithError() throws {
@@ -63,4 +64,5 @@ final class ScannerTests: XCTestCase {
         sut.scanAndStoreUpToCharacters(from: CharacterSet.alphanumerics.inverted)
         XCTAssertEqual(sut.execute(on: given), "?!@#abc")
     }
+
 }

@@ -6,6 +6,7 @@ typealias XCGrapherArguments = xcgrapher
 
 /// Needs this name for `ParsableArguments`'s help text to be correct
 struct xcgrapher: ParsableArguments {
+
     @Option(name: .long, help: "The path to the .xcodeproj")
     public var project: String
 
@@ -38,6 +39,7 @@ struct xcgrapher: ParsableArguments {
         guard !target.isEmpty else { die("--target must not be empty.") }
         guard spm || apple || pods else { die("Must include at least one of --apple, --spm or --pods") }
     }
+
 }
 
 extension XCGrapherArguments: XCGrapherOptions {}
