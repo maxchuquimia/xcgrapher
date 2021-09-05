@@ -32,7 +32,11 @@ extension SwiftPackageManager: DependencyManager {
     }
 
     func isManaging(module: String) -> Bool {
-        knownSPMTargets.contains { $0.name == module }
+        knownSPMTargets.contains {
+            // Targets may have dashes, but import statements cannot have dashes. Instead, Xcode suggests the user to use underscores.
+            let normalizedName = $0.name.replacingOccurrences(of: "-", with: "_")
+            return normalizedName == module
+        }
     }
 
     func dependencies(of module: String) -> [String] {
