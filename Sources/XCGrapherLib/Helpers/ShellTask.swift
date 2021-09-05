@@ -33,6 +33,7 @@ extension ShellTask {
         if task.terminationStatus == 0 {
             return String(data: output, encoding: .utf8)!
         } else if task.terminationStatus == 127 {
+            // FIXME: There are cases that it returns status 127 and it's not because the command was not found, e.g. syntax issues with the shell command
             LogError(commandNotFoundInstructions)
             throw CommandError.commandNotFound(message: commandNotFoundInstructions)
         } else {
