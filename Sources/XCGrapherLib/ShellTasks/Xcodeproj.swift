@@ -32,26 +32,24 @@ extension Xcodeproj: ShellTask {
     var stringRepresentation: String {
         switch startingPoint {
         case let .xcodeproj(path, target, _):
-            return """
-            ruby \
-                -r xcodeproj \
-                -e 'Xcodeproj::Project.open("\(path)").targets.filter do |t| t.name == "\(target)" end.first.source_build_phase.files.to_a.reject do |f| f.file_ref.nil? end.each do |f| puts f.file_ref.real_path.to_s end'
-            """
+            return Ruby(require: "xcodeproj", script: """
+            proj = Xcodeproj::Project.open("\(path)")
+            target = proj.targets.select { |t| t.name == "\(target)" }.first
+            sources_files = target.source_build_phase.files.reject { |f| f.file_ref.nil? }
+            sources_files.each { |f| puts(f.file_ref.real_path.to_s) }
+            """).command
         case let .xcworkspace(path, scheme):
-            return """
-            ruby \
-                -r xcodeproj \
-                -r find \
-                -e 'workspace = Xcodeproj::Workspace.new_from_xcworkspace("\(path)")' \
-                -e 'xcodeproj_path = workspace.schemes["\(scheme)"]' \
-                -e 'proj = Xcodeproj::Project.open(xcodeproj_path)' \
-                -e 'xcscheme_path = Find.find(xcodeproj_path).select { |path| path.end_with?("xcschemes/\(scheme).xcscheme") }.first' \
-                -e 'xcscheme = Xcodeproj::XCScheme.new(xcscheme_path)' \
-                -e 'target_name = xcscheme.build_action.entries.first.buildable_references.first.target_name' \
-                -e 'target = proj.targets.select { |t| t.name == target_name }.first' \
-                -e 'sources_files = target.source_build_phase.files.reject { |f| f.file_ref.nil? }' \
-                -e 'sources_files.each { |f| puts(f.file_ref.real_path.to_s) }'
-            """
+            return Ruby(require: "xcodeproj", "find", script: """
+            workspace = Xcodeproj::Workspace.new_from_xcworkspace("\(path)")
+            xcodeproj_path = workspace.schemes["\(scheme)"]
+            proj = Xcodeproj::Project.open(xcodeproj_path)
+            xcscheme_path = Find.find(xcodeproj_path).select { |path| path.end_with?("xcschemes/\(scheme).xcscheme") }.first
+            xcscheme = Xcodeproj::XCScheme.new(xcscheme_path)
+            target_name = xcscheme.build_action.entries.first.buildable_references.first.target_name
+            target = proj.targets.select { |t| t.name == target_name }.first
+            sources_files = target.source_build_phase.files.reject { |f| f.file_ref.nil? }
+            sources_files.each { |f| puts(f.file_ref.real_path.to_s) }
+            """).command
         case .swiftPackage: preconditionFailure("We shouldn't start a \(Self.self) shell task with a Swift Package starting point.")
         }
     }
@@ -68,40 +66,36 @@ private struct ProjectLocalDependencies: ShellTask {
     var stringRepresentation: String {
         switch startingPoint {
         case let .xcodeproj(path, _, xcworkspacePath):
-            return """
-            ruby \
-                -r xcodeproj \
-                -e 'project_path = File.absolute_path("\(path)")' \
-                -e 'project = Xcodeproj::Project.open(project_path)' \
-                -e 'local_spm_dependencies = project.objects.select { |o| o.isa == "XCSwiftPackageProductDependency" and o.package == nil }.map(&:product_name)' \
-                -e 'relative_paths = project.files.select { |f| local_spm_dependencies.include?(f.name) }.map(&:path)' \
-                -e 'absolute_paths = relative_paths.map { |p| File.expand_path(p, File.dirname(project_path)) }' \
-                -e 'workspace_path = File.absolute_path("\(xcworkspacePath ?? "")")' \
-                -e 'workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)' \
-                -e 'workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values' \
-                -e 'puts("\(Constants.projectDependenciesPathsDivider)")' \
-                -e 'absolute_paths.each { |p| puts(p) }' \
-                -e 'puts("\(Constants.workspaceDependenciesPathsDivider)")' \
-                -e 'workspace_spm_dependencies.each { |p| puts(p) }'
-            """
+            return Ruby(require: "xcodeproj", script: """
+            project_path = File.absolute_path("\(path)")
+            project = Xcodeproj::Project.open(project_path)
+            local_spm_dependencies = project.objects.select { |o| o.isa == "XCSwiftPackageProductDependency" and o.package == nil }.map(&:product_name)
+            relative_paths = project.files.select { |f| local_spm_dependencies.include?(f.name) }.map(&:path)
+            absolute_paths = relative_paths.map { |p| File.expand_path(p, File.dirname(project_path)) }
+            workspace_path = File.absolute_path("\(xcworkspacePath ?? "")")
+            workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)
+            workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values
+            puts("\(Constants.projectDependenciesPathsDivider)")
+            absolute_paths.each { |p| puts(p) }
+            puts("\(Constants.workspaceDependenciesPathsDivider)")
+            workspace_spm_dependencies.each { |p| puts(p) }
+            """).command
         case let .xcworkspace(path, scheme):
-            return """
-                ruby \
-                -r xcodeproj \
-                -r find \
-                -e 'workspace_path = File.absolute_path("\(path)")' \
-                -e 'workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)' \
-                -e 'project_path = workspace.schemes["\(scheme)"]' \
-                -e 'project = Xcodeproj::Project.open(project_path)' \
-                -e 'local_spm_dependencies = project.objects.select { |o| o.isa == "XCSwiftPackageProductDependency" and o.package == nil }.map(&:product_name)' \
-                -e 'relative_paths = project.files.select { |f| local_spm_dependencies.include?(f.name) }.map(&:path)' \
-                -e 'absolute_paths = relative_paths.map { |p| File.expand_path(p, File.dirname(project_path)) }' \
-                -e 'workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values' \
-                -e 'puts("\(Constants.projectDependenciesPathsDivider)")' \
-                -e 'absolute_paths.each { |p| puts(p) }' \
-                -e 'puts("\(Constants.workspaceDependenciesPathsDivider)")' \
-                -e 'workspace_spm_dependencies.each { |p| puts(p) }'
-            """
+            // Maybe  "find"
+            return Ruby(require: "xcodeproj", "find", script: """
+            workspace_path = File.absolute_path("\(path)")
+            workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)
+            project_path = workspace.schemes["\(scheme)"]
+            project = Xcodeproj::Project.open(project_path)
+            local_spm_dependencies = project.objects.select { |o| o.isa == "XCSwiftPackageProductDependency" and o.package == nil }.map(&:product_name)
+            relative_paths = project.files.select { |f| local_spm_dependencies.include?(f.name) }.map(&:path)
+            absolute_paths = relative_paths.map { |p| File.expand_path(p, File.dirname(project_path)) }
+            workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values
+            puts("\(Constants.projectDependenciesPathsDivider)")
+            absolute_paths.each { |p| puts(p) }
+            puts("\(Constants.workspaceDependenciesPathsDivider)")
+            workspace_spm_dependencies.each { |p| puts(p) }
+            """).command
         case .swiftPackage: preconditionFailure("We shouldn't start a \(Self.self) shell task with a Swift Package starting point.")
         }
     }
