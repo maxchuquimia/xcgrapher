@@ -4,4 +4,5 @@
 /*.xcodeproj
 xcuserdata/
 Tests/SampleProjects/SomeApp/Pods
+Tests/SampleProjects/SomePackage/.build
 Sources/xcgrapher/Generated.swift
