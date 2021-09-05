@@ -109,9 +109,9 @@ private extension PluginSupport {
             }
 
             // Now recurse
-            let packageImports = ImportFinder(fileList: package.sources).allImportedModules()
-            for _module in packageImports {
-                try recurseSwiftPackages(from: _module, importedBy: module, importerType: .spm, building: &nodeList, skipping: &modulesToSkip)
+            let packageImports = swiftPackageManager?.dependencies(of: module) ?? []
+            for packageImport in packageImports {
+                try recurseSwiftPackages(from: packageImport, importedBy: module, importerType: .spm, building: &nodeList, skipping: &modulesToSkip)
             }
         } else if nativeManager?.isManaging(module: module) == true {
             modulesToSkip.insert(module)
