@@ -155,6 +155,7 @@ private enum KnownEdges {
         (SUT.scheme, "Charts"),
         (SUT.scheme, "RealmSwift"),
         (SUT.scheme, "Lottie"),
+        (SUT.scheme, "SomePackageDependency"),
         ("RealmSwift", "Realm"),
         ("Charts", "Algorithms"),
         ("Algorithms", "RealModule"),
@@ -184,6 +185,8 @@ private enum KnownEdges {
         ("Charts", "Cocoa"),
         ("Charts", "Quartz"),
         ("Charts", "UIKit"),
+        ("SomePackageDependency", "Foundation"),
+        ("SomePackageDependency", "CoreGraphics"),
     ]
 
     static let appleFromPods: [(String, String)] = [
