@@ -27,7 +27,7 @@ extension NativeDependencyManager: DependencyManager {
         allNativeFrameworks.contains(module)
     }
 
-    func dependencies(of _: String) -> [String] {
+    func dependencies(of module: String) -> [String] {
         [] // Obviously we don't know how Apple's frameworks work internally
     }
 }
