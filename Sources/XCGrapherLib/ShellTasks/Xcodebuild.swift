@@ -1,12 +1,11 @@
 
 import Foundation
 
-struct Xcodebuild {
-
+struct Xcodebuild: SwiftPackageDependencySource {
     let projectFile: FileManager.Path
     let target: String
 
-    func swiftPackageDependencies() throws -> [FileManager.Path] {
+    func computeCheckoutsDirectory() throws -> String {
         // Clone all the packages into $DERIVED_DATA/SourcePackages/checkouts
         let output = try execute()
             .breakIntoLines()
@@ -20,15 +19,7 @@ struct Xcodebuild {
                 $0.scanAndStoreUpToAndIncluding(string: "DerivedData/")
                 $0.scanAndStoreUpTo(string: "/")
             }
-
-        let checkoutsDir = derivedDataDir.appending("/SourcePackages/checkouts")
-
-        // Return the paths to every package clone
-        return try FileManager.default.contentsOfDirectory(atPath: checkoutsDir)
-            .map { checkoutsDir.appendingPathComponent($0) }
-            .filter { FileManager.default.directoryExists(atPath: $0) }
-            .appending(checkoutsDir) // We also need to check the checkouts directory itself - it seems Realm unpacks itself weirdly and puts it's Package.swift in the checkouts folder :eye_roll:
-            .filter { FileManager.default.fileExists(atPath: $0.appendingPathComponent("Package.swift")) }
+        return derivedDataDir.appending("/SourcePackages/checkouts")
     }
 
 }

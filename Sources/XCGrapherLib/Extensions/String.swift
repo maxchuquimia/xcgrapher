@@ -1,13 +1,7 @@
 
 import Foundation
 
-extension String {
-
-    func scan(buildOperations: (Scanner.Builder) -> Void) -> String {
-        let builder = Scanner.Builder()
-        buildOperations(builder)
-        return builder.execute(on: self)
-    }
+public extension String {
 
     func appendingPathComponent(_ component: String) -> String {
         var result = self
@@ -19,6 +13,16 @@ extension String {
         }
         result.append(component)
         return result
+    }
+
+}
+
+extension String {
+
+    func scan(buildOperations: (Scanner.Builder) -> Void) -> String {
+        let builder = Scanner.Builder()
+        buildOperations(builder)
+        return builder.execute(on: self)
     }
 
     func lastPathComponent() -> String {

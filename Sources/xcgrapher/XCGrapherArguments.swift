@@ -9,10 +9,13 @@ typealias XCGrapherArguments = xcgrapher
 struct xcgrapher: ParsableArguments {
 
     @Option(name: .long, help: "The path to the .xcodeproj")
-    public var project: String
+    public var project: String?
 
-    @Option(name: .long, help: "The name of the target within the project")
+    @Option(name: .long, help: "The name of the Xcode project target (or Swift Package product) to use as a starting point")
     public var target: String
+
+    @Option(name: .long, help: "The path to a Swift Package directory")
+    public var package: String?
 
     @Option(name: .long, help: "The path to the projects Podfile.lock")
     public var podlock: String = "./Podfile.lock"
@@ -35,10 +38,34 @@ struct xcgrapher: ParsableArguments {
     @Flag(name: .long, help: "Show frameworks that no dependency manager claims to be managing (perhaps there are name discrepancies?). Using this option doesn't make sense unless you are also using all the other include flags relevant to your project.")
     public var force: Bool = false
 
+    var startingPoint: StartingPoint {
+        if let project = project {
+            return .xcodeProject(project)
+        } else {
+            // Should be safe due to the implementation of validate() below
+            return .swiftPackage(package!)
+        }
+    }
+
     public func validate() throws {
-        guard FileManager.default.directoryExists(atPath: project) else { die("'\(project)' is not a valid xcode project.") }
+        var isRunningForXcodeProject = false
+
+        if let project = project {
+            isRunningForXcodeProject = true
+            guard FileManager.default.directoryExists(atPath: project) else { die("'\(project)' is not a valid xcode project.") }
+        }
+
+        if !isRunningForXcodeProject {
+            guard let package = package else { die("--project or --package must be provided.") }
+            guard !package.isEmpty else { die("--package is invalid") }
+            guard FileManager.default.fileExists(atPath: package.appendingPathComponent("Package.swift")) else { die("'\(package)' is not a valid Swift Package directory") }
+        }
+
         guard !target.isEmpty else { die("--target must not be empty.") }
-        guard spm || apple || pods else { die("Must include at least one of --apple, --spm or --pods") }
+        
+        if isRunningForXcodeProject {
+            guard spm || apple || pods else { die("Must include at least one of --apple, --spm or --pods") }
+        }
     }
 
 }
