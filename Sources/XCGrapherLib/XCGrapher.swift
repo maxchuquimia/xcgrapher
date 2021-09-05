@@ -1,10 +1,8 @@
-
 import Foundation
 
 public enum XCGrapher {
 
     public static func run(with options: XCGrapherOptions) throws {
-
         // MARK: - Load the plugin
 
         Log("Loading plugin \(options.plugin)")

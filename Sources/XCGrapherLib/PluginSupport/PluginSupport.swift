@@ -29,7 +29,7 @@ class PluginSupport {
             let pluginFile = XCGrapherFile(
                 filename: file.lastPathComponent(),
                 filepath: file,
-                fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (target: target, file: file)) ,
+                fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (target: target, file: file)),
                 origin: .target(name: target)
             )
 

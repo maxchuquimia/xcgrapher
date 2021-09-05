@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "SomePackage",
-            targets: ["SomePackage"]),
+            targets: ["SomePackage"]
+        ),
     ],
     dependencies: [
         .package(name: "Kingfisher", url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "6.0.0")),

@@ -1,4 +1,3 @@
-
 import Foundation
 
 public extension String {
@@ -6,9 +5,9 @@ public extension String {
     func appendingPathComponent(_ component: String) -> String {
         var result = self
         let delimiter = "/"
-        if !result.hasSuffix(delimiter) && !component.hasPrefix(delimiter) {
+        if !result.hasSuffix(delimiter), !component.hasPrefix(delimiter) {
             result.append(delimiter)
-        } else if result.hasSuffix(delimiter) && component.hasPrefix(delimiter) {
+        } else if result.hasSuffix(delimiter), component.hasPrefix(delimiter) {
             result.removeLast()
         }
         result.append(component)
