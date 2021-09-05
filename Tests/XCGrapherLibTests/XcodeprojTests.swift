@@ -2,48 +2,60 @@ import XCTest
 @testable import XCGrapherLib
 
 final class XcodeprojTests: XCTestCase {
-    private var sut: Xcodeproj!
 
-    override func setUp() {
-        super.setUp()
-        let someAppXcodeProject = sampleProjectsDirectory
-            .appendingPathComponent("SomeApp")
-            .appendingPathComponent("SomeApp.xcodeproj")
-            .path
-        sut = Xcodeproj(projectFile: someAppXcodeProject, target: "SomeApp")
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testCompileSourcesList() throws {
+    func testCompileSourcesList_whenStartingPointIsXcodeproj() throws {
+        let sut = Xcodeproj(startingPoint: .xcodeproj(path: SUT.xcodeproj.path, target: SUT.target, xcworkspacePath: SUT.workspace.path))
         let sourceList = try sut.compileSourcesList().sorted()
-        let someAppSourcesDirectory = sampleProjectsDirectory.appendingPathComponent("SomeApp/SomeApp")
+        let dir = SUT.xcodeproj.parent.appendingPathComponent("SomeApp")
         let expectedSources = [
-            someAppSourcesDirectory.appendingPathComponent("AppDelegate.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Apple/AVFoundationImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Apple/FoundationImportrs.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Apple/UIKitImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Pods/Auth0Imports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Pods/MoyaImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/Pods/RxImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/SPM/ChartsImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/SPM/LottieImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("Imports/SPM/RealmImports.swift").path,
-            someAppSourcesDirectory.appendingPathComponent("SceneDelegate.swift").path,
+            dir.appendingPathComponent("AppDelegate.swift").path,
+            dir.appendingPathComponent("Imports/Apple/AVFoundationImports.swift").path,
+            dir.appendingPathComponent("Imports/Apple/FoundationImportrs.swift").path,
+            dir.appendingPathComponent("Imports/Apple/UIKitImports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/Auth0Imports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/MoyaImports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/RxImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/ChartsImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/LottieImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/RealmImports.swift").path,
+            dir.appendingPathComponent("SceneDelegate.swift").path,
         ].sorted()
         for (source, expectedSource) in zip(sourceList, expectedSources) {
             XCTAssertEqual(source, expectedSource)
         }
     }
 
-    func testLocalSwiftPackageDependencies() throws {
+    func testLocalSwiftPackageDependencies_whenStartingPointIsXcodeproj() throws {
+        let sut = Xcodeproj(startingPoint: .xcodeproj(path: SUT.xcodeproj.path, target: SUT.target, xcworkspacePath: SUT.workspace.path))
         let localDependencies = try sut.localSwiftPackageDependencies()
-        let somePackageDependencyPath = sampleProjectsDirectory
-            .appendingPathComponent("SomePackageDependency")
-            .path
-        XCTAssertEqual(localDependencies, [somePackageDependencyPath])
+        XCTAssertEqual(localDependencies, [SUT.someDependencyDirectory.path])
+    }
+
+    func testCompileSourcesList_whenStartingPointIsXcworkspace() throws {
+        let sut = Xcodeproj(startingPoint: .xcworkspace(path: SUT.workspace.path, scheme: SUT.scheme))
+        let sourceList = try sut.compileSourcesList().sorted()
+        let dir = SUT.workspace.parent.appendingPathComponent("SomeApp")
+        let expectedSources = [
+            dir.appendingPathComponent("AppDelegate.swift").path,
+            dir.appendingPathComponent("Imports/Apple/AVFoundationImports.swift").path,
+            dir.appendingPathComponent("Imports/Apple/FoundationImportrs.swift").path,
+            dir.appendingPathComponent("Imports/Apple/UIKitImports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/Auth0Imports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/MoyaImports.swift").path,
+            dir.appendingPathComponent("Imports/Pods/RxImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/ChartsImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/LottieImports.swift").path,
+            dir.appendingPathComponent("Imports/SPM/RealmImports.swift").path,
+            dir.appendingPathComponent("SceneDelegate.swift").path,
+        ].sorted()
+        for (source, expectedSource) in zip(sourceList, expectedSources) {
+            XCTAssertEqual(source, expectedSource)
+        }
+    }
+
+    func testLocalSwiftPackageDependencies_whenStartingPointIsXcworkspace() throws {
+        let sut = Xcodeproj(startingPoint: .xcworkspace(path: SUT.workspace.path, scheme: SUT.scheme))
+        let localDependencies = try sut.localSwiftPackageDependencies()
+        XCTAssertEqual(localDependencies, [SUT.someDependencyDirectory.path])
     }
 }

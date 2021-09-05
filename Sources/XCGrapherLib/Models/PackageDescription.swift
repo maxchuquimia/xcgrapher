@@ -12,7 +12,7 @@ struct PackageDescription: Decodable {
         }
     }
 
-    struct Target: Decodable {
+    struct Target: Decodable, Hashable {
         let name: String
         let path: String
         let sources: [String]

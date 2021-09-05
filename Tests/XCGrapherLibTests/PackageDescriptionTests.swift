@@ -11,10 +11,10 @@ final class PackageDescriptionTests: XCTestCase {
             PackageDescription.Dependency(url: URL(string: "https://github.com/onevcat/Kingfisher.git")!),
             PackageDescription.Dependency(url: URL(string: "https://github.com/Moya/Moya.git")!),
             PackageDescription.Dependency(url: URL(string: "https://github.com/Alamofire/Alamofire.git")!),
-            PackageDescription.Dependency(url: sampleProjectsDirectory.appendingPathComponent("SomePackageDependency")),
+            PackageDescription.Dependency(url: SUT.someDependencyDirectory),
         ]
-        XCTAssertEqual(package.name, "SomePackage")
-        XCTAssertEqual(package.path, sampleProjectsDirectory.appendingPathComponent("SomePackage").path)
+        XCTAssertEqual(package.name, SUT.somePackageDirectory.lastPathComponent)
+        XCTAssertEqual(package.path, SUT.somePackageDirectory.path)
         XCTAssertEqual(package.targets.count, 2)
         XCTAssertEqual(package.dependencies, expectedDependencies)
     }

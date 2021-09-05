@@ -51,7 +51,7 @@
 		51A1711B26169DC900A7C0FD /* ChartsImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsImports.swift; sourceTree = "<group>"; };
 		51A1711D26169DD700A7C0FD /* RealmImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmImports.swift; sourceTree = "<group>"; };
 		51C68AB62619C32000B0EFE3 /* FileNotInTargetMembership.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotInTargetMembership.swift; sourceTree = "<group>"; };
-		55CB73222612D090000FB0B3 /* SomeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SomeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CB73222612D090000FB0B3 /* SomeAppTarget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SomeAppTarget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CB73252612D090000FB0B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55CB73272612D090000FB0B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		55CB73292612D090000FB0B3 /* UIKitImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitImports.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		55CB73232612D090000FB0B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				55CB73222612D090000FB0B3 /* SomeApp.app */,
+				55CB73222612D090000FB0B3 /* SomeAppTarget.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,9 +177,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		55CB73212612D090000FB0B3 /* SomeApp */ = {
+		55CB73212612D090000FB0B3 /* SomeAppTarget */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeApp" */;
+			buildConfigurationList = 55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeAppTarget" */;
 			buildPhases = (
 				32B0AD25FB60CD3898679A73 /* [CP] Check Pods Manifest.lock */,
 				55CB731E2612D090000FB0B3 /* Sources */,
@@ -192,7 +192,7 @@
 			);
 			dependencies = (
 			);
-			name = SomeApp;
+			name = SomeAppTarget;
 			packageProductDependencies = (
 				51A170E926169BC000A7C0FD /* Lottie */,
 				51A1711226169D3300A7C0FD /* ChartsDynamic */,
@@ -201,7 +201,7 @@
 				C573C93B26E060ED0023C39D /* SomePackageDependency */,
 			);
 			productName = SomeApp;
-			productReference = 55CB73222612D090000FB0B3 /* SomeApp.app */;
+			productReference = 55CB73222612D090000FB0B3 /* SomeAppTarget.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -236,7 +236,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55CB73212612D090000FB0B3 /* SomeApp */,
+				55CB73212612D090000FB0B3 /* SomeAppTarget */,
 			);
 		};
 /* End PBXProject section */
@@ -505,7 +505,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeApp" */ = {
+		55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeAppTarget" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CB73372612D092000FB0B3 /* Debug */,

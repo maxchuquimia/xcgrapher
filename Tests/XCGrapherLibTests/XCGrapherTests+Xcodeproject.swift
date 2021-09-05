@@ -13,9 +13,8 @@ final class XCGrapherXcodeprojectTests: XCTestCase {
     override class func setUp() {
         super.setUp()
 
-        let someAppRoot = ConcreteGrapherOptions.someAppRoot
-        if !FileManager.default.directoryExists(atPath: someAppRoot.appendingPathComponent("Pods")) {
-            XCTFail("Run `pod install` in \(someAppRoot) before running these tests.")
+        if !FileManager.default.directoryExists(atPath: SUT.xcodeproj.parent.appendingPathComponent("Pods").path) {
+            XCTFail("Run `pod install` in \(SUT.xcodeproj.parent) before running these tests.")
         }
     }
 
@@ -25,6 +24,10 @@ final class XCGrapherXcodeprojectTests: XCTestCase {
         options = ConcreteGrapherOptions()
 
         try? FileManager.default.removeItem(atPath: dotfile)
+    }
+
+    func testPodfileLock_shouldExist() {
+        XCTAssert(FileManager.default.fileExists(atPath: options.podlock))
     }
 
     func testSomeAppPods() throws {
@@ -119,13 +122,8 @@ final class XCGrapherXcodeprojectTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    static let someAppRoot = sampleProjectsDirectory
-        .appendingPathComponent("SomeApp")
-        .path
-
-    var startingPoint: StartingPoint = .xcodeProject(someAppRoot.appendingPathComponent("SomeApp.xcodeproj"))
-    var target: String = "SomeApp"
-    var podlock: String = someAppRoot.appendingPathComponent("Podfile.lock")
+    var startingPoint: StartingPoint = .xcodeproj(path: SUT.xcodeproj.path, target: SUT.target, xcworkspacePath: nil)
+    var podlock: String = SUT.xcodeproj.parent.appendingPathComponent("Podfile.lock").path
     var output: String = "/tmp/xcgraphertests.png"
     var apple: Bool = false
     var spm: Bool = false
@@ -138,11 +136,11 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
 private enum KnownEdges {
 
     static let pods = [
-        ("SomeApp", "RxSwift"),
-        ("SomeApp", "RxCocoa"),
-        ("SomeApp", "Auth0"),
-        ("SomeApp", "Moya"),
-        ("SomeApp", "NSObject_Rx"),
+        (SUT.target, "RxSwift"),
+        (SUT.target, "RxCocoa"),
+        (SUT.target, "Auth0"),
+        (SUT.target, "Moya"),
+        (SUT.target, "NSObject_Rx"),
         ("NSObject_Rx", "RxSwift"),
         ("RxCocoa", "RxSwift"),
         ("RxCocoa", "RxRelay"),
@@ -154,9 +152,9 @@ private enum KnownEdges {
     ]
 
     static let spm = [
-        ("SomeApp", "Charts"),
-        ("SomeApp", "RealmSwift"),
-        ("SomeApp", "Lottie"),
+        (SUT.target, "Charts"),
+        (SUT.target, "RealmSwift"),
+        (SUT.target, "Lottie"),
         ("RealmSwift", "Realm"),
         ("Charts", "Algorithms"),
         ("Algorithms", "RealModule"),
@@ -164,9 +162,9 @@ private enum KnownEdges {
     ]
 
     static let apple = [
-        ("SomeApp", "Foundation"),
-        ("SomeApp", "AVFoundation"),
-        ("SomeApp", "UIKit"),
+        (SUT.target, "Foundation"),
+        (SUT.target, "AVFoundation"),
+        (SUT.target, "UIKit"),
     ]
 
     static let appleFromSPM = [

@@ -39,10 +39,34 @@ func defaultXCGrapherPluginLocation() -> String {
         .appendingPathComponent("XCGrapherModuleImportPlugin")
 }
 
-let sampleProjectsDirectory = URL(string: #file.description)!
-    .deletingLastPathComponent()
-    .deletingLastPathComponent()
-    .appendingPathComponent("SampleProjects")
+
+
+enum SUT {
+    static let sampleProjectsDirectory = URL(string: #file.description)!
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent("SampleProjects")
+    static let xcodeproj: URL = sampleProjectsDirectory
+        .appendingPathComponent("SomeApp")
+        .appendingPathComponent("SomeApp.xcodeproj")
+    static let workspace: URL = sampleProjectsDirectory
+        .appendingPathComponent("SomeApp")
+        .appendingPathComponent("SomeApp.xcworkspace")
+    static let somePackageDirectory: URL = sampleProjectsDirectory
+        .appendingPathComponent("SomePackage")
+    static let target: String = "SomeAppTarget"
+    static let scheme: String = "SomeAppScheme"
+    static let someDependencyDirectory: URL = sampleProjectsDirectory
+        .appendingPathComponent("SomePackageDependency")
+
+}
+
+extension URL {
+    /// Returns the parent directory.
+    var parent: URL {
+        deletingLastPathComponent()
+    }
+}
 
 extension Data {
     init(fromResourceNamed filename: String, extension: String) throws {
