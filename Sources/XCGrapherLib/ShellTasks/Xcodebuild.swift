@@ -11,8 +11,8 @@ struct Xcodebuild: SwiftPackageDependencySource {
 
         // Find the $DERIVED_DATA path
         let derivedDataDir = output
-            .first(where: { $0.contains(" BUILD_DIR = ") })!
-            .replacingOccurrences(of: "BUILD_DIR =", with: "")
+            .first(where: { $0.contains(" \(Constants.xcodeBuildDirBuildSettings) = ") })!
+            .replacingOccurrences(of: "\(Constants.xcodeBuildDirBuildSettings) =", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .scan {
                 $0.scanAndStoreUpToAndIncluding(string: "DerivedData/")

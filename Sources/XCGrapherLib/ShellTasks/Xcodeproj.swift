@@ -15,7 +15,7 @@ struct Xcodeproj {
         let projectLocalDependenciesCommand = ProjectLocalDependencies(startingPoint: startingPoint)
         let output = try projectLocalDependenciesCommand.execute()
             .breakIntoLines()
-            .split { $0 == "ProjectDependenciesPathsDivider" || $0 == "WorkspaceDependenciesPathsDivider" }
+            .split { $0 == Constants.projectDependenciesPathsDivider || $0 == Constants.workspaceDependenciesPathsDivider }
         let projectDependenciesPaths = output[safe: 0] ?? []
         let workspaceDependenciesPaths = output[safe: 1] ?? []
 
@@ -79,9 +79,9 @@ private struct ProjectLocalDependencies: ShellTask {
                 -e 'workspace_path = File.absolute_path("\(xcworkspacePath ?? "")")' \
                 -e 'workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)' \
                 -e 'workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values' \
-                -e 'puts("ProjectDependenciesPathsDivider")' \
+                -e 'puts("\(Constants.projectDependenciesPathsDivider)")' \
                 -e 'absolute_paths.each { |p| puts(p) }' \
-                -e 'puts("WorkspaceDependenciesPathsDivider")' \
+                -e 'puts("\(Constants.workspaceDependenciesPathsDivider)")' \
                 -e 'workspace_spm_dependencies.each { |p| puts(p) }'
             """
         case let .xcworkspace(path, scheme):
@@ -97,9 +97,9 @@ private struct ProjectLocalDependencies: ShellTask {
                 -e 'relative_paths = project.files.select { |f| local_spm_dependencies.include?(f.name) }.map(&:path)' \
                 -e 'absolute_paths = relative_paths.map { |p| File.expand_path(p, File.dirname(project_path)) }' \
                 -e 'workspace_spm_dependencies = workspace.schemes.select { |s| local_spm_dependencies.include?(s) }.values' \
-                -e 'puts("ProjectDependenciesPathsDivider")' \
+                -e 'puts("\(Constants.projectDependenciesPathsDivider)")' \
                 -e 'absolute_paths.each { |p| puts(p) }' \
-                -e 'puts("WorkspaceDependenciesPathsDivider")' \
+                -e 'puts("\(Constants.workspaceDependenciesPathsDivider)")' \
                 -e 'workspace_spm_dependencies.each { |p| puts(p) }'
             """
         case .swiftPackage: preconditionFailure("We shouldn't start a \(Self.self) shell task with a Swift Package starting point.")
