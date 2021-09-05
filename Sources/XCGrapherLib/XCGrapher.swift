@@ -1,24 +1,38 @@
+
 import Foundation
 
 public enum XCGrapher {
+
     public static func run(with options: XCGrapherOptions) throws {
+
         // MARK: - Load the plugin
 
         Log("Loading plugin \(options.plugin)")
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
-
-        Log("Generating list of source files in \(options.target)")
-        let xcodeproj = Xcodeproj(projectFile: options.project, target: options.target)
-        let allSourceFiles = try xcodeproj.compileSourcesList()
+        Log("Generating list of source files in \(options.startingPoint.localisedName)")
+        var sources: [FileManager.Path] = []
+        switch options.startingPoint {
+        case let .xcodeProject(project):
+            let xcodeproj = Xcodeproj(projectFile: project, target: options.target)
+            sources = try xcodeproj.compileSourcesList()
+        case let .swiftPackage(packagePath):
+            let package = SwiftPackage(clone: packagePath)
+            guard let target = try package.targets().first(where: { $0.name == options.target }) else { die("Could not locate target '\(options.target)'") }
+            sources = target.sources
+        }
 
         // MARK: - Create dependency manager lookups
 
-        if options.spm {
+        if options.spm || options.startingPoint.isSPM {
             Log("Building Swift Package list")
-            let xcodebuild = Xcodebuild(projectFile: options.project, target: options.target)
-            let swiftPackageClones = try xcodebuild.swiftPackageDependencies()
+            let swiftPackageDependencySource: SwiftPackageDependencySource
+            switch options.startingPoint {
+            case .xcodeProject: swiftPackageDependencySource = Xcodebuild(projectFile: options.startingPoint.path, target: options.target)
+            case .swiftPackage: swiftPackageDependencySource = SwiftBuild(packagePath: options.startingPoint.path, product: options.target)
+            }
+            let swiftPackageClones = try swiftPackageDependencySource.swiftPackageDependencies()
             let swiftPackageManager = try SwiftPackageManager(packageClones: swiftPackageClones)
             pluginHandler.swiftPackageManager = swiftPackageManager
         }
@@ -49,7 +63,7 @@ public enum XCGrapher {
 
         let digraph = try pluginHandler.generateDigraph(
             target: options.target,
-            projectSourceFiles: allSourceFiles
+            projectSourceFiles: sources
         )
 
         // MARK: - Writing
@@ -64,4 +78,5 @@ public enum XCGrapher {
 
         Log("Result written to", options.output)
     }
+
 }

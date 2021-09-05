@@ -34,6 +34,7 @@ extension ShellTask {
             LogError(commandNotFoundInstructions)
             throw CommandError.commandNotFound(message: commandNotFoundInstructions)
         } else {
+            LogError("The command failed with exit code \(task.terminationStatus)")
             throw CommandError.failure(stderr: String(data: errorOutput, encoding: .utf8)!)
         }
     }

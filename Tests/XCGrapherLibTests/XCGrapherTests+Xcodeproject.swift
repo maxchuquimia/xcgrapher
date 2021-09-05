@@ -1,9 +1,11 @@
+
 import XCTest
 
 @testable import XCGrapherLib
 
 /// `sut` fail to execute `dot`, however we don't care as we are just reading the output text file
-final class XCGrapherTests: XCTestCase {
+final class XCGrapherXcodeprojectTests: XCTestCase {
+
     private var sut: ((XCGrapherOptions) throws -> Void)!
     private var options: ConcreteGrapherOptions!
     let dotfile = "/tmp/xcgrapher.dot"
@@ -112,9 +114,11 @@ final class XCGrapherTests: XCTestCase {
 
         XCGrapherAssertDigraphIsMadeFromEdges(digraph, expectedEdges)
     }
+
 }
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
+
     static let someAppRoot = URL(fileURLWithPath: #file)
         .deletingLastPathComponent()
         .deletingLastPathComponent()
@@ -122,7 +126,7 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
         .appendingPathComponent("SomeApp")
         .path
 
-    var project: String = someAppRoot.appendingPathComponent("SomeApp.xcodeproj")
+    var startingPoint: StartingPoint = .xcodeProject(someAppRoot.appendingPathComponent("SomeApp.xcodeproj"))
     var target: String = "SomeApp"
     var podlock: String = someAppRoot.appendingPathComponent("Podfile.lock")
     var output: String = "/tmp/xcgraphertests.png"
@@ -131,9 +135,11 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
     var pods: Bool = false
     var force: Bool = false
     var plugin: String = defaultXCGrapherPluginLocation()
+
 }
 
 private enum KnownEdges {
+
     static let pods = [
         ("SomeApp", "RxSwift"),
         ("SomeApp", "RxCocoa"),
@@ -188,4 +194,5 @@ private enum KnownEdges {
     static let appleFromPods: [(String, String)] = [
         // Unsupported at this time
     ]
+
 }
