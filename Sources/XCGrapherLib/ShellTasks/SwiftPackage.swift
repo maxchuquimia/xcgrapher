@@ -10,14 +10,9 @@ struct SwiftPackage {
     }
 
     func packageDescription() throws -> PackageDescription {
-        do {
-            let json = try execute()
-            let jsonData = json.data(using: .utf8)!
-            return try JSONDecoder().decode(PackageDescription.self, from: jsonData)
-        } catch {
-            LogError(error)
-            throw error
-        }
+        let json = try execute()
+        let jsonData = json.data(using: .utf8)!
+        return try JSONDecoder().decode(PackageDescription.self, from: jsonData)
     }
 
 }
