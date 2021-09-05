@@ -9,19 +9,19 @@ protocol ShellTask {
     var commandNotFoundInstructions: String { get }
 
     /// Provides the opportunity to recover from an error
-    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery
+    func recover(from error: String, with terminationStatus: Int32) -> ErrorRecoveryResult
 }
 
 extension ShellTask {
 
-    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery {
+    func recover(from error: String, with terminationStatus: Int32) -> ErrorRecoveryResult {
         .unableToRecover
     }
 
 }
 
-enum ShellTaskErrorRecovery {
-    /// The error could not be ignored and the program should be terminated
+enum ErrorRecoveryResult {
+    /// The program couldn't recover from the error and should be terminated.
     case unableToRecover
 
     /// The error was non-fatal and the program should continue with `newOutput` as the shell task's output

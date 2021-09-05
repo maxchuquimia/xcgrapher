@@ -69,9 +69,9 @@ private class ConcreteShellTask: ShellTask {
 
     var stringRepresentation: String = ""
     var commandNotFoundInstructions: String = ""
-    var errorRecoveryHandler: ((String, Int32) -> ShellTaskErrorRecovery)?
+    var errorRecoveryHandler: ((String, Int32) -> ErrorRecoveryResult)?
 
-    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery {
+    func recover(from error: String, with terminationStatus: Int32) -> ErrorRecoveryResult {
         errorRecoveryHandler?(error, terminationStatus) ?? .unableToRecover
     }
 

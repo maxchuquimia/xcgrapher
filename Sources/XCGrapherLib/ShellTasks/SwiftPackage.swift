@@ -24,7 +24,7 @@ extension SwiftPackage: ShellTask {
         "Missing command 'swift'"
     }
 
-    func recover(from error: String, with terminationStatus: Int32) -> ShellTaskErrorRecovery {
+    func recover(from error: String, with terminationStatus: Int32) -> ErrorRecoveryResult {
         guard terminationStatus == 1 && error.contains("artifact not found for target") else { return .unableToRecover }
         LogError(error)
         LogError("This is a bug with the Swift Package Manager!")
