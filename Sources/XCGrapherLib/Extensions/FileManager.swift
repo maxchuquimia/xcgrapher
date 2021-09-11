@@ -1,6 +1,7 @@
 import Foundation
 
 public extension FileManager {
+
     typealias Path = String
 
     func directoryExists(atPath path: Path) -> Bool {
@@ -8,4 +9,5 @@ public extension FileManager {
         fileExists(atPath: path, isDirectory: &isDirectory)
         return isDirectory.boolValue
     }
+
 }

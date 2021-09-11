@@ -50,6 +50,8 @@ final class ShellTaskTests: XCTestCase {
 }
 
 private class ConcreteShellTask: ShellTask {
+
     var stringRepresentation: String = ""
     var commandNotFoundInstructions: String = ""
+
 }

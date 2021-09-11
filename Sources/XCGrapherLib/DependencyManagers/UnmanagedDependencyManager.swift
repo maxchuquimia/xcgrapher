@@ -6,6 +6,7 @@ import XCGrapherPluginSupport
 struct UnmanagedDependencyManager {}
 
 extension UnmanagedDependencyManager: DependencyManager {
+
     var pluginModuleType: XCGrapherImport.ModuleType {
         .other
     }
@@ -17,4 +18,5 @@ extension UnmanagedDependencyManager: DependencyManager {
     func dependencies(of module: String) -> [String] {
         []
     }
+
 }

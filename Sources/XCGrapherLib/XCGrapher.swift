@@ -9,6 +9,7 @@ public enum XCGrapher {
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
+
         Log("Generating list of source files in \(options.startingPoint.localisedName)")
         var sources: [FileManager.Path] = []
         switch options.startingPoint {

@@ -1,7 +1,9 @@
 import Foundation
 
 extension Scanner {
+
     class Builder {
+
         private var operations: [(Scanner) -> String?] = []
 
         func scanUpTo(string: String) {
@@ -50,5 +52,7 @@ extension Scanner {
             }
             return finalOutput
         }
+
     }
+
 }

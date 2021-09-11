@@ -27,6 +27,7 @@ uninstall:
 
 lint:
 	swiftlint --autocorrect .
+	swiftlint .
 	swiftformat .
 
 clean:

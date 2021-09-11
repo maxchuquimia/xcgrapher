@@ -8,6 +8,7 @@ import Foundation
 /// }
 /// ```
 class Digraph {
+
     /// The name of the digraph structure
     let name: String
 
@@ -44,9 +45,11 @@ class Digraph {
         lines.append("}")
         return lines.joined(separator: "\n")
     }
+
 }
 
 private extension Digraph {
+
     struct Edge {
         let a: String
         let b: String
@@ -67,4 +70,5 @@ private extension Digraph {
             .map { "  ".appending($0.string) }
             .sortedAscendingCaseInsensitively()
     }
+
 }

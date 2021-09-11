@@ -37,5 +37,5 @@ public enum StartingPoint {
         case let .swiftPackage(packagePath): return packagePath
         }
     }
-    
+
 }

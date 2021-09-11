@@ -17,8 +17,6 @@
 --enable andOperator
 --enable AnyObjectProtocol
 --enable blankLinesAroundMark
---enable blankLinesAtEndOfScope
---enable blankLinesAtStartOfScope
 --enable blankLinesBetweenScopes
 --enable consecutiveBlankLines
 --enable consecutiveSpaces
@@ -68,6 +66,8 @@
 --enable wrap
 --enable wrapAttributes
 
+--disable blankLinesAtEndOfScope
+--disable blankLinesAtStartOfScope
 --disable numberFormatting
 --disable redundantReturn
 --disable unusedArguments
