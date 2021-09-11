@@ -51,15 +51,7 @@ final class XCGrapherSPMTests: XCTestCase {
 
 private struct ConcreteGrapherOptions: XCGrapherOptions {
 
-    static let somePackageRoot = URL(fileURLWithPath: #file)
-        .deletingLastPathComponent()
-        .deletingLastPathComponent()
-        .appendingPathComponent("SampleProjects")
-        .appendingPathComponent("SomePackage")
-        .path
-
-    var startingPoint: StartingPoint = .swiftPackage(somePackageRoot)
-    var target: String = "SomePackage"
+    var startingPoint: StartingPoint = .swiftPackage(path: SUT.somePackageDirectory.path, target: SUT.somePackageDirectory.lastPathComponent)
     var podlock: String = ""
     var output: String = "/tmp/xcgraphertests.png"
     var apple: Bool = false
@@ -73,15 +65,16 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
 private enum KnownEdges {
 
     static let spm = [
-        ("SomePackage", "Kingfisher"),
-        ("SomePackage", "Moya"),
+        (SUT.somePackageDirectory.lastPathComponent, "Kingfisher"),
+        (SUT.somePackageDirectory.lastPathComponent, "Moya"),
         ("Moya", "Alamofire"),
-        ("SomePackage", "Alamofire"),
+        (SUT.somePackageDirectory.lastPathComponent, "Alamofire"),
+        (SUT.somePackageDirectory.lastPathComponent, "SomePackageDependency")
     ]
 
     static let apple = [
-        ("SomePackage", "Foundation"),
-        ("SomePackage", "CoreGraphics"),
+        (SUT.somePackageDirectory.lastPathComponent, "Foundation"),
+        (SUT.somePackageDirectory.lastPathComponent, "CoreGraphics"),
     ]
 
     static let appleFromSPM: [(String, String)] = [
@@ -105,6 +98,8 @@ private enum KnownEdges {
         ("Moya", "AppKit"),
         ("Moya", "Foundation"),
         ("Moya", "UIKit"),
+        ("SomePackageDependency", "Foundation"),
+        ("SomePackageDependency", "CoreGraphics"),
     ]
 
 }

@@ -15,14 +15,31 @@ struct SwiftBuild: SwiftPackageDependencySource {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent("checkouts")
-        return checkoutsDirectory.absoluteString
+        return checkoutsDirectory.path
+    }
+
+    func swiftPackageDependencies() throws -> [FileManager.Path] {
+        let checkoutsDirectory = try computeCheckoutsDirectory()
+        // Return the paths to every package clone
+        let remoteDependencies = try FileManager.default.contentsOfDirectory(atPath: checkoutsDirectory)
+            .map { checkoutsDirectory.appendingPathComponent($0) }
+            .filter { FileManager.default.directoryExists(atPath: $0) }
+            .appending(checkoutsDirectory) // We also need to check the checkouts directory itself - it seems Realm unpacks itself weirdly and puts it's Package.swift in the checkouts folder :eye_roll:
+            .filter { FileManager.default.fileExists(atPath: $0.appendingPathComponent("Package.swift")) }
+
+        let package = SwiftPackage(clone: packagePath)
+        let localDependencies: [FileManager.Path] = try package
+            .packageDescription()
+            .localDependencies
+            .map { $0.url.path }
+        return remoteDependencies + localDependencies
     }
 }
 
 extension SwiftBuild: ShellTask {
     var stringRepresentation: String {
-        // We need to first build the package (which implicitly resolves its dependencies), and then print the binary path via `--show-bin-path`
-        "swift build --package-path \"\(packagePath)\" --product \"\(product)\" && swift build --package-path \"\(packagePath)\" --product \"\(product)\" --show-bin-path"
+        // We need to first resolve the package dependencies, and then print the binary path via `--show-bin-path`
+        "swift package resolve --package-path \"\(packagePath)\" && swift build --package-path \"\(packagePath)\" --product \"\(product)\" --show-bin-path"
     }
 
     var commandNotFoundInstructions: String {

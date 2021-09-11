@@ -1,0 +1,71 @@
+{
+    "dependencies": [
+        {
+            "name": "Kingfisher",
+            "requirement":
+            {
+                "range": [{"lower_bound": "6.0.0","upper_bound": "7.0.0"}]
+            },
+            "url": "https://github.com/onevcat/Kingfisher.git"
+        },
+        {
+            "name": "Moya",
+            "requirement":
+            {
+                "range": [{"lower_bound": "14.0.0","upper_bound": "15.0.0"}]
+            },
+            "url": "https://github.com/Moya/Moya.git"
+        },
+        {
+            "name": "Alamofire",
+            "requirement":
+            {
+                "range": [{"lower_bound": "5.4.3","upper_bound": "6.0.0"}]
+            },
+            "url": "https://github.com/Alamofire/Alamofire.git"
+        },
+        {
+            "name": "SomePackageDependency",
+            "requirement":
+            {
+                "local_package": null
+            },
+            "url": "/Users/rogerluan/Documents/Projects/xcgrapher/Tests/SampleProjects/SomePackageDependency"
+        }
+    ],
+    "name": "SomePackage",
+    "path": "/Users/rogerluan/Documents/Projects/xcgrapher/Tests/SampleProjects/SomePackage",
+    "platforms": [{"name": "macos","version": "10.15"}],
+    "products": [
+        {
+            "name": "SomePackage",
+            "targets": ["SomePackage"],
+            "type":
+            {
+                "library": ["automatic"]
+            }
+        }
+    ],
+    "targets": [
+        {
+            "c99name": "SomePackageTests",
+            "module_type": "SwiftTarget",
+            "name": "SomePackageTests",
+            "path": "Tests/SomePackageTests",
+            "sources": ["SomePackageTests.swift","XCTestManifests.swift"],
+            "target_dependencies": ["SomePackage"],
+            "type": "test"
+        },
+        {
+            "c99name": "SomePackage",
+            "module_type": "SwiftTarget",
+            "name": "SomePackage",
+            "path": "Sources/SomePackage",
+            "product_memberships": ["SomePackage"],
+            "sources": ["AppleImports.swift","DependencyImports.swift","LocalDependencyImports.swift","SomePackage.swift"],
+            "target_dependencies": [],
+            "type": "library"
+        }
+    ],
+    "tools_version": "5.3"
+}

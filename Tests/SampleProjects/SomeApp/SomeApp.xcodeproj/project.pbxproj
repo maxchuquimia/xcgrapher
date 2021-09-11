@@ -26,7 +26,9 @@
 		55CB734A2612D44B000FB0B3 /* MoyaImports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB73492612D44B000FB0B3 /* MoyaImports.swift */; };
 		55CB73502612D462000FB0B3 /* RxImports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB734F2612D462000FB0B3 /* RxImports.swift */; };
 		55CB73552612D4AF000FB0B3 /* Auth0Imports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB73542612D4AF000FB0B3 /* Auth0Imports.swift */; };
-		A7F769F045BDE665C9D46F0B /* Pods_SomeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F337E1111B60AEE48675B94C /* Pods_SomeApp.framework */; };
+		AEAE3592CB2ACD8FB38F349A /* Pods_SomeAppTarget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E94B45BD35C198E9B1D4875 /* Pods_SomeAppTarget.framework */; };
+		C54585C426E44225004D7316 /* SomePackageDependencyImports.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54585C326E44225004D7316 /* SomePackageDependencyImports.swift */; };
+		C573C93C26E060ED0023C39D /* SomePackageDependency in Frameworks */ = {isa = PBXBuildFile; productRef = C573C93B26E060ED0023C39D /* SomePackageDependency */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,7 +52,7 @@
 		51A1711B26169DC900A7C0FD /* ChartsImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsImports.swift; sourceTree = "<group>"; };
 		51A1711D26169DD700A7C0FD /* RealmImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmImports.swift; sourceTree = "<group>"; };
 		51C68AB62619C32000B0EFE3 /* FileNotInTargetMembership.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotInTargetMembership.swift; sourceTree = "<group>"; };
-		55CB73222612D090000FB0B3 /* SomeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SomeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CB73222612D090000FB0B3 /* SomeAppTarget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SomeAppTarget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CB73252612D090000FB0B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55CB73272612D090000FB0B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		55CB73292612D090000FB0B3 /* UIKitImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitImports.swift; sourceTree = "<group>"; };
@@ -62,8 +64,11 @@
 		55CB734F2612D462000FB0B3 /* RxImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxImports.swift; sourceTree = "<group>"; };
 		55CB73542612D4AF000FB0B3 /* Auth0Imports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth0Imports.swift; sourceTree = "<group>"; };
 		6E2EFEEB4F7DAAEFF24DEA64 /* Pods-SomeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SomeApp.debug.xcconfig"; path = "Target Support Files/Pods-SomeApp/Pods-SomeApp.debug.xcconfig"; sourceTree = "<group>"; };
+		863BF17BC50ADB8D55BF737A /* Pods-SomeAppTarget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SomeAppTarget.debug.xcconfig"; path = "Target Support Files/Pods-SomeAppTarget/Pods-SomeAppTarget.debug.xcconfig"; sourceTree = "<group>"; };
+		8E94B45BD35C198E9B1D4875 /* Pods_SomeAppTarget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SomeAppTarget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD971342226A177C5E24001D /* Pods-SomeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SomeApp.release.xcconfig"; path = "Target Support Files/Pods-SomeApp/Pods-SomeApp.release.xcconfig"; sourceTree = "<group>"; };
-		F337E1111B60AEE48675B94C /* Pods_SomeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SomeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA97B1C85FC7990D28D03A41 /* Pods-SomeAppTarget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SomeAppTarget.release.xcconfig"; path = "Target Support Files/Pods-SomeAppTarget/Pods-SomeAppTarget.release.xcconfig"; sourceTree = "<group>"; };
+		C54585C326E44225004D7316 /* SomePackageDependencyImports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SomePackageDependencyImports.swift; path = ../../../../../../../../../SomePackageDependencyImports.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +78,10 @@
 			files = (
 				51A1711826169DB800A7C0FD /* RealmSwift in Frameworks */,
 				51A1711326169D3300A7C0FD /* ChartsDynamic in Frameworks */,
-				A7F769F045BDE665C9D46F0B /* Pods_SomeApp.framework in Frameworks */,
+				C573C93C26E060ED0023C39D /* SomePackageDependency in Frameworks */,
 				51A170EA26169BC000A7C0FD /* Lottie in Frameworks */,
 				51A1711A26169DB800A7C0FD /* Realm in Frameworks */,
+				AEAE3592CB2ACD8FB38F349A /* Pods_SomeAppTarget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +104,7 @@
 				51A1710126169BDA00A7C0FD /* LottieImports.swift */,
 				51A1711B26169DC900A7C0FD /* ChartsImports.swift */,
 				51A1711D26169DD700A7C0FD /* RealmImports.swift */,
+				C54585C326E44225004D7316 /* SomePackageDependencyImports.swift */,
 			);
 			path = SPM;
 			sourceTree = "<group>";
@@ -115,7 +122,7 @@
 		537B80F642424D669D2FA993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F337E1111B60AEE48675B94C /* Pods_SomeApp.framework */,
+				8E94B45BD35C198E9B1D4875 /* Pods_SomeAppTarget.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,7 +140,7 @@
 		55CB73232612D090000FB0B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				55CB73222612D090000FB0B3 /* SomeApp.app */,
+				55CB73222612D090000FB0B3 /* SomeAppTarget.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,6 +175,8 @@
 			children = (
 				6E2EFEEB4F7DAAEFF24DEA64 /* Pods-SomeApp.debug.xcconfig */,
 				AD971342226A177C5E24001D /* Pods-SomeApp.release.xcconfig */,
+				863BF17BC50ADB8D55BF737A /* Pods-SomeAppTarget.debug.xcconfig */,
+				BA97B1C85FC7990D28D03A41 /* Pods-SomeAppTarget.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -175,9 +184,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		55CB73212612D090000FB0B3 /* SomeApp */ = {
+		55CB73212612D090000FB0B3 /* SomeAppTarget */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeApp" */;
+			buildConfigurationList = 55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeAppTarget" */;
 			buildPhases = (
 				32B0AD25FB60CD3898679A73 /* [CP] Check Pods Manifest.lock */,
 				55CB731E2612D090000FB0B3 /* Sources */,
@@ -190,15 +199,16 @@
 			);
 			dependencies = (
 			);
-			name = SomeApp;
+			name = SomeAppTarget;
 			packageProductDependencies = (
 				51A170E926169BC000A7C0FD /* Lottie */,
 				51A1711226169D3300A7C0FD /* ChartsDynamic */,
 				51A1711726169DB800A7C0FD /* RealmSwift */,
 				51A1711926169DB800A7C0FD /* Realm */,
+				C573C93B26E060ED0023C39D /* SomePackageDependency */,
 			);
 			productName = SomeApp;
-			productReference = 55CB73222612D090000FB0B3 /* SomeApp.app */;
+			productReference = 55CB73222612D090000FB0B3 /* SomeAppTarget.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -225,7 +235,7 @@
 			);
 			mainGroup = 55CB73192612D090000FB0B3;
 			packageReferences = (
-				51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
 				51A1711126169D3300A7C0FD /* XCRemoteSwiftPackageReference "Charts" */,
 				51A1711626169DB800A7C0FD /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
@@ -233,7 +243,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55CB73212612D090000FB0B3 /* SomeApp */,
+				55CB73212612D090000FB0B3 /* SomeAppTarget */,
 			);
 		};
 /* End PBXProject section */
@@ -267,7 +277,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SomeApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SomeAppTarget-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -280,15 +290,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SomeApp/Pods-SomeApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SomeAppTarget/Pods-SomeAppTarget-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SomeApp/Pods-SomeApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SomeAppTarget/Pods-SomeAppTarget-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SomeApp/Pods-SomeApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SomeAppTarget/Pods-SomeAppTarget-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -308,6 +318,7 @@
 				55CB73502612D462000FB0B3 /* RxImports.swift in Sources */,
 				51A1710926169C2500A7C0FD /* FoundationImportrs.swift in Sources */,
 				55CB73282612D090000FB0B3 /* SceneDelegate.swift in Sources */,
+				C54585C426E44225004D7316 /* SomePackageDependencyImports.swift in Sources */,
 				55CB73552612D4AF000FB0B3 /* Auth0Imports.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -452,7 +463,7 @@
 		};
 		55CB73372612D092000FB0B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E2EFEEB4F7DAAEFF24DEA64 /* Pods-SomeApp.debug.xcconfig */;
+			baseConfigurationReference = 863BF17BC50ADB8D55BF737A /* Pods-SomeAppTarget.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -472,7 +483,7 @@
 		};
 		55CB73382612D092000FB0B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD971342226A177C5E24001D /* Pods-SomeApp.release.xcconfig */;
+			baseConfigurationReference = BA97B1C85FC7990D28D03A41 /* Pods-SomeAppTarget.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -502,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeApp" */ = {
+		55CB73362612D092000FB0B3 /* Build configuration list for PBXNativeTarget "SomeAppTarget" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55CB73372612D092000FB0B3 /* Debug */,
@@ -514,7 +525,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -543,7 +554,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		51A170E926169BC000A7C0FD /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 51A170E826169BC000A7C0FD /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 		51A1711226169D3300A7C0FD /* ChartsDynamic */ = {
@@ -560,6 +571,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 51A1711626169DB800A7C0FD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
+		};
+		C573C93B26E060ED0023C39D /* SomePackageDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SomePackageDependency;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
