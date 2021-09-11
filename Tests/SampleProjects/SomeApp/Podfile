@@ -1,4 +1,4 @@
-target 'SomeApp' do
+target 'SomeAppTarget' do
     platform :ios, '13.0'
     use_frameworks!
     # These exist only for tests, so they need to be exact
