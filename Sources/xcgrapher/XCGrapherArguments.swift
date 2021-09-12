@@ -1,6 +1,5 @@
-
-import Foundation
 import ArgumentParser
+import Foundation
 import XCGrapherLib
 
 typealias XCGrapherArguments = xcgrapher
@@ -62,7 +61,7 @@ struct xcgrapher: ParsableArguments {
         }
 
         guard !target.isEmpty else { die("--target must not be empty.") }
-        
+
         if isRunningForXcodeProject {
             guard spm || apple || pods else { die("Must include at least one of --apple, --spm or --pods") }
         }
@@ -70,4 +69,4 @@ struct xcgrapher: ParsableArguments {
 
 }
 
-extension XCGrapherArguments: XCGrapherOptions { }
+extension XCGrapherArguments: XCGrapherOptions {}

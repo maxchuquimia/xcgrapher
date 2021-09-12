@@ -1,4 +1,3 @@
-
 import Foundation
 import XCGrapherPluginSupport
 
@@ -31,7 +30,7 @@ class PluginSupport {
             let pluginFile = XCGrapherFile(
                 filename: file.lastPathComponent(),
                 filepath: file,
-                fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (target: target, file: file)) ,
+                fileContents: try failWithContext(attempt: String(contentsOfFile: file), context: (target: target, file: file)),
                 origin: .target(name: target)
             )
 
@@ -40,8 +39,8 @@ class PluginSupport {
         }
 
         for module in targetImports {
-            
             // MARK: - Swift Package Manager
+
             // Also handles Apple frameworks imported by Swift Packages
             if swiftPackageManager?.isManaging(module: module) == true {
                 var previouslyEncounteredModules: Set<String> = []
@@ -49,12 +48,14 @@ class PluginSupport {
             }
 
             // MARK: - Cocoapods
+
             else if cocoapodsManager?.isManaging(module: module) == true {
                 var previouslyEncounteredModules: Set<String> = []
                 try recurseCocoapods(from: module, importedBy: target, importerType: .target, building: &nodes, skipping: &previouslyEncounteredModules)
             }
 
             // MARK: - Apple
+
             // (only Apple frameworks imported by the main --target)
             else if nativeManager?.isManaging(module: module) == true {
                 let _nodes = try plugin_process(library: XCGrapherImport(moduleName: module, importerName: target, moduleType: .apple, importerType: .target))

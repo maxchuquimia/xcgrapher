@@ -1,4 +1,3 @@
-
 import Foundation
 
 // Must also handle `@testable import X`, `import class X.Y` etc
@@ -10,6 +9,7 @@ struct ImportFinder {
     /// - Returns: A list of frameworks being imported by every file in `fileList`.
     func allImportedModules() -> [String] {
         fileList
+            // swiftlint:disable force_try
             .map { try! String(contentsOfFile: $0) }
             .flatMap { $0.breakIntoLines() }
             .map { $0.trimmingCharacters(in: .whitespaces) }
@@ -38,4 +38,3 @@ struct ImportFinder {
     }
 
 }
-

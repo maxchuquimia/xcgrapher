@@ -1,16 +1,15 @@
-
 import Foundation
 
 public enum XCGrapher {
 
     public static func run(with options: XCGrapherOptions) throws {
-
         // MARK: - Load the plugin
 
         Log("Loading plugin \(options.plugin)")
         let pluginHandler = try PluginSupport(pluginPath: options.plugin)
 
         // MARK: - Prepare the --target source file list
+
         Log("Generating list of source files in \(options.startingPoint.localisedName)")
         var sources: [FileManager.Path] = []
         switch options.startingPoint {

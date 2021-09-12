@@ -1,4 +1,3 @@
-
 import Foundation
 
 struct SwiftPackage {
@@ -25,4 +24,3 @@ extension SwiftPackage: ShellTask {
     }
 
 }
-

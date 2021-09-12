@@ -25,6 +25,11 @@ uninstall:
 	rm -rf "$(libdir)/libXCGrapherPluginSupport.dylib"
 	rm -rf "$(libdir)/libXCGrapherModuleImportPlugin.dylib"
 
+lint:
+	swiftlint --autocorrect .
+	swiftlint .
+	swiftformat .
+
 clean:
 	rm -rf .build
 	rm Sources/xcgrapher/Generated.swift

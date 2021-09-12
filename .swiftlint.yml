@@ -1,0 +1,97 @@
+opt_in_rules:
+    - closure_spacing
+    - overridden_super_call
+    - redundant_nil_coalescing
+    - prohibited_super_call
+    - explicit_init
+    - unused_import
+    - empty_parameters
+    - attributes
+    - closure_end_indentation
+    - collection_alignment
+    - trailing_comma
+    - convenience_type
+    - empty_collection_literal
+    - empty_count
+    - empty_enum_arguments
+    - empty_string
+    - extension_access_modifier
+    - file_name_no_space
+    - implicit_getter
+    - implicit_return
+    - joined_default_parameter
+    - modifier_order
+    - multiline_arguments
+    - multiline_literal_brackets
+    - multiple_closures_with_trailing_closure
+    - operator_usage_whitespace
+    - pattern_matching_keywords
+    - prefer_self_type_over_type_of_self
+    - unneeded_parentheses_in_closure_argument
+    - multiline_arguments_brackets
+    - multiline_function_chains
+    - for_where
+    - trailing_whitespace
+
+disabled_rules:
+    - file_length
+    - line_length
+    - type_body_length
+    - identifier_name
+    - type_name
+    - todo
+    - nesting
+    - duplicate_enum_cases
+    - force_unwrapping
+    - force_cast
+    - function_body_length
+    - cyclomatic_complexity
+    - weak_delegate
+
+custom_rules:
+
+  customrule_case_let:
+      regex: "case +\\.[A-Za-z0-9]*\\([^\n]*?(let )"
+      message: "Prefer `case let .something(varname):` instead of `case .something(let varname):`"
+      capture_group: 1
+
+  customrule_force_vertical_alignment_with_whitespace:
+      regex: "[^ ]( {2,20})[:=]"
+      message: "Unexpected whitespace. Use just a single space between elements"
+      capture_group: 1
+
+  customrule_string_contentsof:
+      regex: "String\\(contentsOf:"
+      message: "This could make a synchronous API call - reconsider or use String(contentsOfFile:) for loading local files"
+
+  customrule_init_nscoder:
+      regex: "required init[^\n]*: NSCoder\\) \\{(\n +[fp]| \\S+\"| precon)"
+      message: "Simplify to 'required init?(coder: NSCoder) { fatalError() }'"
+      capture_group: 1
+
+  customrule_blank_line_opening_class:
+    regex: "(class|extension) [A-Z][^{\n]*\\{[^\n}]*\n^[^\n]"
+    message: "Insert blank line after class/extension opening '{'"
+
+  # This is a bit of a cheeky one as it's only checking top-level classes.. but should still work as a teaching mechanism
+  customrule_blank_line_closing_class:
+    regex: " *(class|extension) [A-Z][^\n]*\n(\n    [^\n]*|\n)+?\\}\n(\\})"
+    message: "Insert blank line before class/extension closing '}'"
+    capture_group: 3
+
+included: # paths to include during linting. `--path` is ignored if present.
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+    - ".build"
+    - "Tests/SampleProjects/SomePackage/.build"
+    - "Tests/SampleProjects/SomeApp/Pods"
+
+large_tuple:
+    warning: 5
+
+trailing_comma:
+    mandatory_comma: true
+
+multiline_arguments:
+    first_argument_location: next_line
+

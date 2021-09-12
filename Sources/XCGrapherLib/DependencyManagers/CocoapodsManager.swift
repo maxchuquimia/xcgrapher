@@ -1,9 +1,7 @@
-
 import Foundation
 import XCGrapherPluginSupport
 
 struct CocoapodsManager {
-
     /// Contains something like:
     /// ```
     /// PODS:
@@ -20,15 +18,14 @@ struct CocoapodsManager {
     init(lockFile: FileManager.Path) throws {
         lockfilePodList =
             try String(contentsOfFile: lockFile)
-            .scan {
-                $0.scanUpTo(string: "PODS:")
-                $0.scanAndStoreUpTo(string: "\n\n")
-            }
-            // Account for NSObject+Rx being quoted and actually being imported with a _ instead of +
-            .replacingOccurrences(of: "+", with: "_")
-            .replacingOccurrences(of: "\"", with: "")
+                .scan {
+                    $0.scanUpTo(string: "PODS:")
+                    $0.scanAndStoreUpTo(string: "\n\n")
+                }
+                // Account for NSObject+Rx being quoted and actually being imported with a _ instead of +
+                .replacingOccurrences(of: "+", with: "_")
+                .replacingOccurrences(of: "\"", with: "")
     }
-
 }
 
 extension CocoapodsManager: DependencyManager {
@@ -51,7 +48,7 @@ extension CocoapodsManager: DependencyManager {
             }
             .breakIntoLines()
             .dropFirst()
-            .map { $0.trimmingCharacters(in: CharacterSet(charactersIn:  " -:\n")) }
+            .map { $0.trimmingCharacters(in: CharacterSet(charactersIn: " -:\n")) }
             .filter { !$0.isEmpty }
             .map { $0.components(separatedBy: " ")[0] }
             .map { $0.replacingOccurrences(of: "\"", with: "") }

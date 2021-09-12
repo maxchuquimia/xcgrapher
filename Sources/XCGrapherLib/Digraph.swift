@@ -1,4 +1,3 @@
-
 import Foundation
 
 /// A class for generating a Digraph string file - e.g.
@@ -38,7 +37,7 @@ class Digraph {
     func build() -> String {
         var lines = ["digraph \(name) {"]
         lines.append("")
-        lines.append("  graph [ nodesep = 0.5, ranksep = 4, overlap = false, splines = true ]")//splines=ortho,
+        lines.append("  graph [ nodesep = 0.5, ranksep = 4, overlap = false, splines = true ]") // splines=ortho,
         lines.append("  node [ shape = box ]")
         lines.append("")
         lines.append(contentsOf: indentedEdgeStrings)
@@ -62,7 +61,7 @@ private extension Digraph {
             if let color = color {
                 attributes["color"] = "\"\(color)\""
             }
-            return base + (attributes.isEmpty ? "" : " [ \(attributes.map({ $0 + "=" + $1 }).joined(separator: ", ")) ]")
+            return base + (attributes.isEmpty ? "" : " [ \(attributes.map { $0 + "=" + $1 }.joined(separator: ", ")) ]")
         }
     }
 

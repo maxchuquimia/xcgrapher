@@ -1,6 +1,5 @@
-
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class FileManagerExtensionTests: XCTestCase {
 

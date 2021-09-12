@@ -1,9 +1,10 @@
-
 import Foundation
 
 struct Graphviz {
+
     let input: FileManager.Path
     let output: FileManager.Path
+
 }
 
 extension Graphviz: ShellTask {

@@ -1,7 +1,7 @@
-
 import Foundation
 
 struct Xcodeproj {
+
     let projectFile: FileManager.Path
     let target: String
 
@@ -23,5 +23,5 @@ extension Xcodeproj: ShellTask {
     var commandNotFoundInstructions: String {
         "Missing command 'xcodeproj' - install it with `gem install xcodeproj` or see https://github.com/CocoaPods/Xcodeproj"
     }
-    
+
 }

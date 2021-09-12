@@ -1,4 +1,3 @@
-
 import Foundation
 
 extension Array {
@@ -20,10 +19,10 @@ extension Array where Element: Hashable {
 extension Array where Element == String {
 
     func sortedAscendingCaseInsensitively() -> [String] {
-        sorted { (a, b) -> Bool in
+        sorted { a, b -> Bool in
             let _a = a.lowercased()
             let _b = b.lowercased()
-            return _a == _b ?  a < b : _a < _b
+            return _a == _b ? a < b : _a < _b
         }
     }
 

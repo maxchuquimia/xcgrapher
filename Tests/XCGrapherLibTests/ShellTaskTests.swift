@@ -1,6 +1,5 @@
-
-import XCTest
 @testable import XCGrapherLib
+import XCTest
 
 final class ShellTaskTests: XCTestCase {
 
@@ -51,6 +50,8 @@ final class ShellTaskTests: XCTestCase {
 }
 
 private class ConcreteShellTask: ShellTask {
+
     var stringRepresentation: String = ""
     var commandNotFoundInstructions: String = ""
+
 }
