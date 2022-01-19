@@ -7,7 +7,7 @@ configure:
 	echo "let DEFAULT_PLUGIN_LOCATION=\"$(libdir)/libXCGrapherModuleImportPlugin.dylib\"" > Sources/xcgrapher/Generated.swift
 
 build: configure
-	swift build -c release --disable-sandbox
+	xcrun swift build -c release --disable-sandbox
 
 install: build
 	# Seems like brew hasn't created this yet and it confuses 'install' so...
