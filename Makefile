@@ -19,6 +19,7 @@ install: build
 	install "$(buildroot)/libXCGrapherPluginSupport.dylib" "$(libdir)"
 	install "$(buildroot)/libXCGrapherModuleImportPlugin.dylib" "$(libdir)"
 	install_name_tool -change "$(buildroot)/libXCGrapherPluginSupport.dylib" "$(libdir)/libXCGrapherPluginSupport.dylib" "$(bindir)/xcgrapher"
+	install_name_tool -change "@rpath/libXCGrapherPluginSupport.dylib" "$(libdir)/libXCGrapherPluginSupport.dylib" "$(bindir)/xcgrapher"
 
 uninstall:
 	rm -rf "$(bindir)/xcgrapher"
