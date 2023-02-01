@@ -1,8 +1,16 @@
 import Foundation
 
 struct Xcodebuild: SwiftPackageDependencySource {
-    let projectFile: FileManager.Path
-    let target: String
+
+    let commandArgs: String
+
+    init(projectFile: FileManager.Path, target: String) {
+        commandArgs = "-project \"\(projectFile)\" -target \"\(target)\""
+    }
+
+    init(workspaceFile: FileManager.Path, scheme: String) {
+        commandArgs = "-workspace \"\(workspaceFile)\" -scheme \"\(scheme)\""
+    }
 
     func computeCheckoutsDirectory() throws -> String {
         // Clone all the packages into $DERIVED_DATA/SourcePackages/checkouts
@@ -26,7 +34,7 @@ struct Xcodebuild: SwiftPackageDependencySource {
 extension Xcodebuild: ShellTask {
 
     var stringRepresentation: String {
-        "xcodebuild -project \"\(projectFile)\" -target \"\(target)\" -showBuildSettings"
+        "xcodebuild \(commandArgs) -showBuildSettings"
     }
 
     var commandNotFoundInstructions: String {

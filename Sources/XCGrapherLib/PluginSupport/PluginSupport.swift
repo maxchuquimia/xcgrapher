@@ -8,6 +8,7 @@ class PluginSupport {
     var swiftPackageManager: SwiftPackageManager?
     var cocoapodsManager: CocoapodsManager?
     var nativeManager: NativeDependencyManager?
+    var customProjectManager: XcodeProjectAsDependencyManager?
     var unknownManager: UnmanagedDependencyManager?
 
     init(pluginPath: FileManager.Path) throws {
@@ -60,6 +61,12 @@ class PluginSupport {
             else if nativeManager?.isManaging(module: module) == true {
                 let _nodes = try plugin_process(library: XCGrapherImport(moduleName: module, importerName: target, moduleType: .apple, importerType: .target))
                 nodes.append(contentsOf: _nodes)
+            }
+
+            // MARK: - Custom
+            else if customProjectManager?.isManaging(module: module) == true {
+                var previouslyEncounteredModules: Set<String> = []
+                try recurseCustomXcodeProjects(from: module, importedBy: target, importerType: .target, building: &nodes, skipping: &previouslyEncounteredModules)
             }
 
             // Weird unknown cases
@@ -140,6 +147,31 @@ private extension PluginSupport {
 
         for podImport in cocoapodsManager?.dependencies(of: module) ?? [] {
             try recurseCocoapods(from: podImport, importedBy: module, importerType: .cocoapods, building: &nodeList, skipping: &modulesToSkip)
+        }
+    }
+
+    func recurseCustomXcodeProjects(from module: String, importedBy importer: String, importerType: XCGrapherImport.ModuleType, building nodeList: inout [Any], skipping modulesToSkip: inout Set<String>) throws {
+        let _nodes = try plugin_process(library: XCGrapherImport(moduleName: module, importerName: importer, moduleType: .other, importerType: importerType))
+        nodeList.append(contentsOf: _nodes)
+
+        guard !modulesToSkip.contains(module) else { return }
+        modulesToSkip.insert(module)
+
+        guard customProjectManager?.isManaging(module: module) == true else { return }
+
+        for importedName in customProjectManager?.dependencies(of: module) ?? [] {
+            if swiftPackageManager?.isManaging(module: importedName) == true {
+                try recurseSwiftPackages(from: importedName, importedBy: module, importerType: .other, building: &nodeList, skipping: &modulesToSkip)
+            } else if customProjectManager?.isManaging(module: importedName) == true {
+                try recurseCustomXcodeProjects(from: importedName, importedBy: module, importerType: .other, building: &nodeList, skipping: &modulesToSkip)
+            } else  if cocoapodsManager?.isManaging(module: importedName) == true {
+                try recurseCocoapods(from: importedName, importedBy: module, importerType: .other, building: &nodeList, skipping: &modulesToSkip)
+            } else if nativeManager?.isManaging(module: importedName) == true {
+                modulesToSkip.insert(importedName)
+
+                let _nodes = try plugin_process(library: XCGrapherImport(moduleName: importedName, importerName: module, moduleType: .apple, importerType: .other))
+                nodeList.append(contentsOf: _nodes)
+            }
         }
     }
 

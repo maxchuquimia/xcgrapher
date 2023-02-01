@@ -57,8 +57,7 @@ private struct ConcreteGrapherOptions: XCGrapherOptions {
         .appendingPathComponent("SomePackage")
         .path
 
-    var startingPoint: StartingPoint = .swiftPackage(somePackageRoot)
-    var target: String = "SomePackage"
+    var startingPoint: StartingPoint = .swiftPackage(somePackageRoot, "SomePackage")
     var podlock: String = ""
     var output: String = "/tmp/xcgraphertests.png"
     var apple: Bool = false
