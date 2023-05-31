@@ -25,6 +25,7 @@ struct ImportFinder {
                     .replacingOccurrences(of: " var ", with: " ")
                     .replacingOccurrences(of: " let ", with: " ")
                     .replacingOccurrences(of: " func ", with: " ")
+                    .replacingOccurrences(of: " typealias ", with: " ")
             }
             .filter { $0 != "import Swift" && !$0.hasPrefix("import Swift.") } // We should ignore "import Swift.Y" and "import Swift" - we can assume the project is dependent on Swift
             .map {
