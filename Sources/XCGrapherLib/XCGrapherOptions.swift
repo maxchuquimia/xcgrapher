@@ -2,7 +2,6 @@ import Foundation
 
 public protocol XCGrapherOptions {
     var startingPoint: StartingPoint { get }
-    var target: String { get }
     var podlock: String { get }
     var output: String { get }
     var apple: Bool { get }
@@ -14,27 +13,31 @@ public protocol XCGrapherOptions {
 
 public enum StartingPoint {
 
-    case xcodeProject(String)
-    case swiftPackage(String)
+    case xcodeProject(String, String)
+    case swiftPackage(String, String)
+    case xcodeWorkspace(String, String)
 
     var localisedName: String {
         switch self {
-        case let .xcodeProject(project): return "Xcode project at path '\(project)'"
-        case let .swiftPackage(packagePath): return "Swift Package at path '\(packagePath)'"
+        case let .xcodeProject(project, _): return "Xcode project at path '\(project)'"
+        case let .swiftPackage(packagePath, _): return "Swift Package at path '\(packagePath)'"
+        case let .xcodeWorkspace(workspace, _): return "Xcode workspace at path '\(workspace)'"
         }
     }
 
     var isSPM: Bool {
         switch self {
-        case .xcodeProject: return false
+        case .xcodeProject, .xcodeWorkspace: return false
         case .swiftPackage: return true
         }
     }
 
     var path: String {
         switch self {
-        case let .xcodeProject(projectPath): return projectPath
-        case let .swiftPackage(packagePath): return packagePath
+        case
+            let .xcodeProject(path, _),
+            let .swiftPackage(path, _),
+            let .xcodeWorkspace(path, _): return path
         }
     }
 

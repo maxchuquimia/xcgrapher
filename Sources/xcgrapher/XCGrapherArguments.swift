@@ -10,8 +10,14 @@ struct xcgrapher: ParsableArguments {
     @Option(name: .long, help: "The path to the .xcodeproj")
     public var project: String?
 
+    @Option(name: .long, help: "The path to a .xcworkspace")
+    public var workspace: String?
+
     @Option(name: .long, help: "The name of the Xcode project target (or Swift Package product) to use as a starting point")
-    public var target: String
+    public var target: String?
+
+    @Option(name: .long, help: "The name of the Xcode workspace scheme to use as a starting point (does not filter graph output)")
+    public var scheme: String?
 
     @Option(name: .long, help: "The path to a Swift Package directory")
     public var package: String?
@@ -38,31 +44,51 @@ struct xcgrapher: ParsableArguments {
     public var force: Bool = false
 
     var startingPoint: StartingPoint {
-        if let project = project {
-            return .xcodeProject(project)
+        if let project {
+            return .xcodeProject(project, target!)
+        } else if let workspace {
+            return .xcodeWorkspace(workspace, scheme!)
         } else {
             // Should be safe due to the implementation of validate() below
-            return .swiftPackage(package!)
+            return .swiftPackage(package!, target!)
         }
     }
 
     public func validate() throws {
         var isRunningForXcodeProject = false
+        var isRunningForXcodeWorkspace = false
 
         if let project = project {
             isRunningForXcodeProject = true
             guard FileManager.default.directoryExists(atPath: project) else { die("'\(project)' is not a valid xcode project.") }
         }
 
-        if !isRunningForXcodeProject {
+        if let workspace = workspace {
+            isRunningForXcodeWorkspace = true
+            guard FileManager.default.directoryExists(atPath: workspace) else { die("'\(workspace)' is not a valid xcode workspace.") }
+        }
+
+        if !isRunningForXcodeProject && !isRunningForXcodeWorkspace {
             guard let package = package else { die("--project or --package must be provided.") }
             guard !package.isEmpty else { die("--package is invalid") }
             guard FileManager.default.fileExists(atPath: package.appendingPathComponent("Package.swift")) else { die("'\(package)' is not a valid Swift Package directory") }
         }
 
-        guard !target.isEmpty else { die("--target must not be empty.") }
-
         if isRunningForXcodeProject {
+            guard let target, !target.isEmpty else { die("--target must not be empty.") }
+            if let scheme, !scheme.isEmpty {
+                die("--scheme is invalid when using --project")
+            }
+        }
+
+        if isRunningForXcodeWorkspace {
+            guard let scheme, !scheme.isEmpty else { die("--scheme must not be empty.") }
+            if let target, !target.isEmpty {
+                die("--target is invalid when using --workspace")
+            }
+        }
+
+        if isRunningForXcodeProject || isRunningForXcodeWorkspace {
             guard spm || apple || pods else { die("Must include at least one of --apple, --spm or --pods") }
         }
     }
